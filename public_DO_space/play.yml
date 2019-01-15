@@ -1,0 +1,31 @@
+- hosts: localhost
+  vars:
+    aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+    aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+    spaces_endpoint: https://ams3.digitaloceanspaces.com
+    bucket_name: datasheet-sources
+    asset_name: ilovaisk_sources_test
+    region_name: nyc3
+    local_folder: /Users/forensicarchitecture/Desktop/cases/ukraine/AllNarrativeSources
+  tasks:
+
+    # - name: Create bucket
+    #   aws_s3:
+    #     aws_access_key: '{{ aws_access_key }}'
+    #     aws_secret_key: '{{ aws_secret_key }}'
+    #     bucket: '{{ asset_name }}'
+    #     s3_url: '{{ spaces_endpoint }}'
+    #     region: '{{ region_name }}'
+    #     permission: public-read
+    #     mode: create
+
+    - name: Upload files
+      s3_sync:
+        aws_access_key: '{{ aws_access_key }}'
+        aws_secret_key: '{{ aws_secret_key }}'
+        ec2_url: '{{ spaces_endpoint }}'
+        region: '{{ region_name }}'
+        bucket: '{{ bucket_name }}'
+        file_root: '{{ local_folder }}'
+        key_prefix: '{{ asset_name }}'
+        permission: public-read
