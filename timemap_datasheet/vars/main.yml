@@ -1,0 +1,15 @@
+domain_name: example.com
+application_name: negev_desert_map
+datasheet:
+  port: 8080
+  sheet_id: 1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk
+timemap:
+  map_anchor:
+    lat: 31.356397
+    lon: 34.784818
+  features:
+    tags: False
+    search: False
+    sites: True
+    narrative_step_styles: False
+

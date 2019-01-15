@@ -1,0 +1,5 @@
+[exampleservers]
+example_server ansible_host=127.0.0.1 ansible_port=2222
+
+[exampleservers:vars]
+ansible_python_interpreter=/usr/bin/python3
