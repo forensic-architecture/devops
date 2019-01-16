@@ -1,0 +1,9 @@
+- name: copy nginx config file
+  template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
+
+- name: enable config
+  file: >
+    dest=/etc/nginx/sites-enabled/default
+    src=/etc/nginx/sites-available/default
+    state=link
+

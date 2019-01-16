@@ -1,13 +1,16 @@
-# Playbook: Deploy Timemap/Datasheet
+# playbooks for timemap and datasheet deployment
 
-This playbook deploys a fully configured instance of
-[Timemap](https://github.com/forensic-architecture/timemap) powered by
-[Datasheet Server](https://github.com/forensic-architecture/datasheet-server),
-to enable a full geo-spatial visualisation of data formatted in a Google sheet.
+* saturate all variables from a .env, so that maintenance of separate repo not required.
+* more flexibly separate 'deploy_develop.yml' into roles
+* template in values in timemap src/store/initial.js to color categories, etc.
+* option to add password protected
 
-In order to run the playbook, you will have to modify the following files,
-interpolating the appropriate variables:
-* hosts
-* ansible.cfg
-* vars/main.yml
-* vars/vault.yml
+* ideally the ability to add new timemap instances without breaking old ones.
+	* this would basically require keeping one ds-s, and adding sheets, which creating new timemap frontends.
+
+
+
+# Necessary Changes
+* in ansible.cfg, add path to your private key
+* create a vault.yml in vars. All custom config can go in here (to override
+    main.yml)

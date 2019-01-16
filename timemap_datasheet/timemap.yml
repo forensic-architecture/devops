@@ -1,0 +1,51 @@
+- name: clean timemap repo state
+  file:
+    state: absent
+    path: timemap
+
+- name: timemap - checkout develop branch
+  git:
+    repo: 'https://github.com/forensic-architecture/timemap'
+    dest: timemap
+    version: develop
+
+- name: copy config.js to timemap
+  template: >
+    src=templates/timemap_config.js.j2
+    dest=timemap/config.js
+
+- name: remove container if exists
+  docker_container:
+    state: absent
+    name: "{{ application_name }}_timemap_build"
+
+- name: remove image if exists
+  docker_image:
+    state: absent
+    name: "{{ application_name }}_timemap"
+
+- name: build image
+  docker_image:
+    path: timemap
+    name: "{{ application_name }}_timemap"
+
+- name: build container
+  docker_container:
+    image: "{{ application_name }}_timemap"
+    name: "{{ application_name }}_timemap_build"
+    state: present
+
+- name: remove previous frontend if exists
+  file:
+    state: absent
+    path: '{{ static_files_folder }}/{{ application_name }}'
+
+- name: copy files from timemap build
+  command: docker cp {{ application_name }}_timemap:/www/build {{ static_files_folder }}/{{ application_name }}
+
+- name: cleanup container
+  docker_container:
+    name: "{{ application_name }}_timemap_build"
+    state: absent
+
+

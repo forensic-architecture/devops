@@ -1,0 +1,42 @@
+- name: clean datasheet repo state
+  file:
+    state: absent
+    path: datasheet-server
+
+- name: checkout develop branch of datasheet
+  git:
+    repo: 'https://github.com/forensic-architecture/datasheet-server'
+    dest: datasheet-server
+    version: develop
+
+- name: copy .env file to datasheet
+  template: src=templates/datasheet-env.j2 dest=datasheet-server/.env
+
+- name: copy sheets_config.js to datasheet
+  template: >
+    src=templates/datasheet_sheets_config.js.j2
+    dest=datasheet-server/src/sheets_config.js
+
+- name: remove container if exists
+  docker_container:
+    name: "{{ application_name }}_datasheet"
+    state: absent
+
+- name: remove image if exists
+  docker_image:
+    state: absent
+    name: "{{ application_name }}_datasheet_prod"
+
+- name: build docker image
+  docker_image:
+    path: datasheet-server
+    name: "{{ application_name }}_datasheet_prod"
+
+- name: run datasheet-server in container
+  docker_container:
+    name: "{{ application_name }}_datasheet"
+    image: "{{ application_name }}_datasheet_prod"
+    ports:
+      - "0.0.0.0:{{ datasheet.port }}:8080"
+
+
