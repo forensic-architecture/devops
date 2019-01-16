@@ -1,10 +1,9 @@
-- hosts: exampleservers
-  become: True
-  user: root
+- hosts: "{{ lookup('env','ANSIBLE_HOST_GROUP') or 'localhost' }}"
+  become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'False' }}"
+  user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
   vars_files:
     - ./vars/main.yml
     - ./vars/vault.yml
-
   tasks:
     - import_tasks: prepare.yml
     - import_tasks: datasheet.yml
