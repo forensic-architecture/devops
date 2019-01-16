@@ -26,6 +26,7 @@
   docker_image:
     state: absent
     name: "{{ application_name }}_datasheet_prod"
+    force: true
 
 - name: build docker image
   docker_image:

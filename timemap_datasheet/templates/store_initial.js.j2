@@ -109,8 +109,8 @@ const initial = {
     style: {
       categories: {
         default: 'yellow',
-      {% for attr in timemap.styles.categories %}
-        '{{ attr }}': '{{ getattr(timemap.styles.categories, attr) }}',
+      {% for key, value in timemap.styles.categories.items() %}
+        '{{ key }}': '{{ value }}',
       {% endfor %}
       },
       narratives: {

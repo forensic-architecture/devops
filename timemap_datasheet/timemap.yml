@@ -14,6 +14,11 @@
     src=templates/timemap_config.js.j2
     dest=timemap/config.js
 
+- name: replace store/initial.js
+  template: >
+    src=templates/store_initial.js.j2
+    dest=timemap/src/store/initial.js
+
 - name: remove container if exists
   docker_container:
     state: absent
@@ -23,6 +28,7 @@
   docker_image:
     state: absent
     name: "{{ application_name }}_timemap"
+    force: true
 
 - name: build image
   docker_image:
@@ -41,7 +47,7 @@
     path: '{{ static_files_folder }}/{{ application_name }}'
 
 - name: copy files from timemap build
-  command: docker cp {{ application_name }}_timemap:/www/build {{ static_files_folder }}/{{ application_name }}
+  command: docker cp {{ application_name }}_timemap_build:/www/build {{ static_files_folder }}/{{ application_name }}
 
 - name: cleanup container
   docker_container:
