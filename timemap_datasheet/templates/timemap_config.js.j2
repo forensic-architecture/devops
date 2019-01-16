@@ -10,7 +10,7 @@ module.exports = {
   NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/rows',
   MAP_ANCHOR: [{{ timemap.map_anchor.lat }}, {{ timemap.map_anchor.lon }}],
   INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
-  MAPBOX_TOKEN: {{ mapbox_token }},
+  MAPBOX_TOKEN: '{{ mapbox_token }}',
   features: {
     USE_TAGS: {{ 'true' if timemap.features.tags else 'false' }},
     USE_SEARCH: {{ 'true' if timemap.features.search else 'false' }},
