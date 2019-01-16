@@ -8,7 +8,7 @@
     - import_tasks: prepare.yml
     - import_tasks: datasheet.yml
     - import_tasks: timemap.yml
-      import_tasks: nginx.yml
+    - import_tasks: nginx.yml
 
     - name: update sheets
       command: curl http://localhost:{{ datasheet.port }}/api/update

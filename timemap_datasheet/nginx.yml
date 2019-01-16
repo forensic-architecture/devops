@@ -1,3 +1,8 @@
+- name: confirm sites-available exists
+  file:
+    path: /etc/nginx/sites-available
+    state: directory
+
 - name: copy nginx config file
   template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
 
