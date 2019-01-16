@@ -23,6 +23,7 @@
   docker_container:
     state: absent
     name: "{{ application_name }}_timemap_build"
+    force_kill: true
 
 - name: remove image if exists
   docker_image:
@@ -53,5 +54,6 @@
   docker_container:
     name: "{{ application_name }}_timemap_build"
     state: absent
+    force_kill: true
 
 

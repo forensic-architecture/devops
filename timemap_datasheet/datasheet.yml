@@ -21,6 +21,7 @@
   docker_container:
     name: "{{ application_name }}_datasheet"
     state: absent
+    force_kill: true
 
 - name: remove image if exists
   docker_image:
