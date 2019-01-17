@@ -10,11 +10,12 @@ module.exports = {
   NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/rows',
   MAP_ANCHOR: [{{ timemap.map_anchor.lat }}, {{ timemap.map_anchor.lon }}],
   INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
-  MAPBOX_TOKEN: 'pk.eyJ1IjoiZmFkZXYiLCJhIjoiY2o2eXNodXpnMjJnbzJybXRmMWtwajVrdyJ9.djCM8zBqCtA-SC_EChxtzQ',
+  MAPBOX_TOKEN: '{{ mapbox_token }}',
   features: {
     USE_TAGS: {{ 'true' if timemap.features.tags else 'false' }},
     USE_SEARCH: {{ 'true' if timemap.features.search else 'false' }},
     USE_SITES: {{ 'true' if timemap.features.sites else 'false' }},
+    USE_SOURCES: {{ 'true' if timemap.features.sources else 'false' }},
     NARRATIVE_STEP_STYLES: {{ 'true' if timemap.features.narrative_step_styles else 'false' }}
   }
 }

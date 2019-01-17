@@ -1,3 +1,5 @@
 service_account:
   email: service_account@account_name.iam.gserviceaccount.com
   private_key: -----BEGIN PRIVATE YOUR_PRIVATE_KEY_HERE PRIVATE KEY-----\n
+
+mapbox_token: your_mapbox_token

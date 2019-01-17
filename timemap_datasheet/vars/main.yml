@@ -1,5 +1,6 @@
 domain_name: example.com
 application_name: negev_desert_map
+static_files_folder: /var/www/html
 datasheet:
   port: 8080
   sheet_id: 1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk
@@ -11,5 +12,6 @@ timemap:
     tags: False
     search: False
     sites: True
+    sources: True
     narrative_step_styles: False
 
