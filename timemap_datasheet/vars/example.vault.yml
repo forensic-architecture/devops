@@ -3,3 +3,12 @@ service_account:
   private_key: -----BEGIN PRIVATE YOUR_PRIVATE_KEY_HERE PRIVATE KEY-----\n
 
 mapbox_token: your_mapbox_token
+
+domain_name: timemap.example.com
+application_name: my_app
+
+timemap:
+  features:
+    # ...any features
+  store:
+    # ...any custom store values

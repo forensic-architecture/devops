@@ -3,15 +3,30 @@ application_name: negev_desert_map
 static_files_folder: /var/www/html
 datasheet:
   port: 8080
-  sheet_id: 1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk
+  sheet_id: 1SJ4D30c5s1lrMKU3v3cfhNZv9vdKp6_sPJQ0s2hw6R0
 timemap:
-  map_anchor:
-    lat: 31.356397
-    lon: 34.784818
   features:
-    tags: False
-    search: False
-    sites: True
-    sources: True
-    narrative_step_styles: False
+    USE_TAGS: false
+    USE_SEARCH: false
+    USE_SITES: false
+    USE_SOURCES: false
+    USE_SHAPES: false
+    CATEGORIES_AS_TAGS: true
+    NARRATIVE_STEP_STYLES: false
+
+  # NB: any custom values in the redux store can be specified here
+  store:
+    map:
+      anchor: [31.356397, 34.784818]
+    # NB: this inelegant structure is necessary to initialise the timeline as a date obj
+    timeline:
+      yr0: 2014
+      mth0: 7
+      day0: 4
+      hr0: 12
+      yr1: 2017
+      mth1: 7
+      day1: 4
+      hr1: 12
+
 

@@ -8,14 +8,25 @@ module.exports = {
   TAGS_EXT: '/api/{{ application_name }}/export_tags/tree',
   SITES_EXT: '/api/{{ application_name }}/export_sites/rows',
   NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/rows',
-  MAP_ANCHOR: [{{ timemap.map_anchor.lat }}, {{ timemap.map_anchor.lon }}],
   INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
   MAPBOX_TOKEN: '{{ mapbox_token }}',
   features: {
-    USE_TAGS: {{ 'true' if timemap.features.tags else 'false' }},
-    USE_SEARCH: {{ 'true' if timemap.features.search else 'false' }},
-    USE_SITES: {{ 'true' if timemap.features.sites else 'false' }},
-    USE_SOURCES: {{ 'true' if timemap.features.sources else 'false' }},
-    NARRATIVE_STEP_STYLES: {{ 'true' if timemap.features.narrative_step_styles else 'false' }}
+    {% for key, value in timemap.features.items() %}
+      {{key}}: {{ 'true' if value else 'false' }},
+    {% endfor %}
+  },
+  store: {
+    app: {
+      map: {
+        anchor: {{ timemap.store.app.map.anchor }}
+      },
+      timeline: {
+        range: [
+          new Date({{ timemap.store.app.timeline.yr0 }}, {{ timemap.store.app.timeline.mth0 }}, {{ timemap.store.app.timeline.day0 }}, {{ timemap.store.app.timeline.hr0 }}),
+          new Date({{ timemap.store.app.timeline.yr1 }}, {{ timemap.store.app.timeline.mth1 }}, {{ timemap.store.app.timeline.day1 }}, {{ timemap.store.app.timeline.hr1 }})
+        ]
+      }
+    },
+    ui: {{ timemap.store.ui }}
   }
 }

@@ -1,0 +1,20 @@
+- hosts: localhost
+  vars:
+    aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+    aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+    spaces_endpoint: https://ams3.digitaloceanspaces.com
+    bucket_name: name_of_bucket_on_DO
+    asset_name: name_of_folder_on_DO
+    region_name: nyc3
+  tasks:
+
+    - name: publicise all files in folder
+      aws_s3:
+        aws_access_key: '{{ aws_access_key }}'
+        aws_secret_key: '{{ aws_secret_key }}'
+        s3_url: '{{ spaces_endpoint }}'
+        region: '{{ region_name }}'
+        mode: list
+        bucket: '{{ bucket_name }}'
+        dest: '{{ asset_name }}'
+        permission: authenticated-read
