@@ -14,11 +14,6 @@
     src=templates/timemap_config.js.j2
     dest=timemap/config.js
 
-- name: replace store/initial.js
-  template: >
-    src=templates/store_initial.js.j2
-    dest=timemap/src/store/initial.js
-
 - name: remove container if exists
   docker_container:
     state: absent

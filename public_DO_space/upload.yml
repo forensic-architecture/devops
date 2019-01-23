@@ -4,7 +4,7 @@
     aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
     spaces_endpoint: https://ams3.digitaloceanspaces.com
     bucket_name: datasheet-sources
-    asset_name: ilovaisk_sources_test
+    asset_name: ilovaisk_sources
     region_name: nyc3
     local_folder: /Users/forensicarchitecture/Desktop/cases/ukraine/AllNarrativeSources
   tasks:
