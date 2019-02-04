@@ -8,17 +8,6 @@
     region_name: nyc3
     local_folder: /Users/forensicarchitecture/Desktop/cases/ukraine/AllNarrativeSources
   tasks:
-
-    # - name: Create bucket
-    #   aws_s3:
-    #     aws_access_key: '{{ aws_access_key }}'
-    #     aws_secret_key: '{{ aws_secret_key }}'
-    #     bucket: '{{ asset_name }}'
-    #     s3_url: '{{ spaces_endpoint }}'
-    #     region: '{{ region_name }}'
-    #     permission: public-read
-    #     mode: create
-
     - name: Upload files
       s3_sync:
         aws_access_key: '{{ aws_access_key }}'

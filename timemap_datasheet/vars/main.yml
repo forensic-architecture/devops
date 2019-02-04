@@ -18,15 +18,5 @@ timemap:
   store:
     map:
       anchor: [31.356397, 34.784818]
-    # NB: this inelegant structure is necessary to initialise the timeline as a date obj
-    timeline:
-      yr0: 2014
-      mth0: 7
-      day0: 4
-      hr0: 12
-      yr1: 2017
-      mth1: 7
-      day1: 4
-      hr1: 12
 
 

@@ -17,16 +17,18 @@ module.exports = {
   },
   store: {
     app: {
-      map: {
-        anchor: {{ timemap.store.app.map.anchor }}
-      },
+      map: {{ timemap.store.app.map | to_nice_json }},
       timeline: {
         range: [
-          new Date({{ timemap.store.app.timeline.yr0 }}, {{ timemap.store.app.timeline.mth0 }}, {{ timemap.store.app.timeline.day0 }}, {{ timemap.store.app.timeline.hr0 }}),
-          new Date({{ timemap.store.app.timeline.yr1 }}, {{ timemap.store.app.timeline.mth1 }}, {{ timemap.store.app.timeline.day1 }}, {{ timemap.store.app.timeline.hr1 }})
+          new Date("{{ timemap.store.app.timeline.range[0] }}"),
+          new Date("{{ timemap.store.app.timeline.range[1] }}")
+        ],
+        rangeLimits: [
+          new Date("{{ timemap.store.app.timeline.rangeLimits[0] }}"),
+          new Date("{{ timemap.store.app.timeline.rangeLimits[1] }}")
         ]
       }
     },
-    ui: {{ timemap.store.ui }}
+    ui: {{ timemap.store.ui | to_nice_json }}
   }
 }
