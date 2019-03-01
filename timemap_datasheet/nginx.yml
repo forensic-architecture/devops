@@ -6,6 +6,18 @@
 - name: copy nginx config file
   template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
 
+- name: Make sure we can use htpasswd module
+  pip: name=passlib
+
+- name: add user to password file
+  htpasswd:
+    path: /etc/nginx/.htpasswd
+    name: "{{ nginx.username }}"
+    password: "{{ nginx.password }}"
+    owner: root
+    group: www-data
+    mode: 0640
+
 - name: enable config
   file: >
     dest=/etc/nginx/sites-enabled/default

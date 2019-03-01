@@ -1,13 +1,13 @@
-- name: clean timemap repo state
-  file:
-    state: absent
-    path: timemap
-
-- name: timemap - checkout develop branch
-  git:
-    repo: 'https://github.com/forensic-architecture/timemap'
-    dest: timemap
-    version: develop
+# - name: clean timemap repo state
+#   file:
+#     state: absent
+#     path: timemap
+#
+# - name: timemap - checkout appropriate branch
+#   git:
+#     repo: 'https://github.com/forensic-architecture/timemap'
+#     dest: timemap
+#     version: develop
 
 - name: copy config.js to timemap
   template: >
