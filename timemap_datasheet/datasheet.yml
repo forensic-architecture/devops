@@ -1,3 +1,4 @@
+
 - name: clean datasheet repo state
   file:
     state: absent
@@ -9,13 +10,30 @@
     dest: datasheet-server
     version: develop
 
-- name: copy .env file to datasheet
-  template: src=templates/datasheet-env.j2 dest=datasheet-server/.env
+- name: create credentials folder if it does not already exist
+  file:
+    path: credentials
+    state: directory
 
-- name: copy sheets_config.js to datasheet
+- name: copy .env to credentials folder
+  template: src=templates/datasheet-env.j2 dest=credentials/{{application_name}}.env
+
+- name: copy sheets_config.js to credentials folder
   template: >
     src=templates/datasheet_sheets_config.js.j2
-    dest=datasheet-server/src/sheets_config.js
+    dest=credentials/{{ application_name }}_sheets_config.js
+
+- name: copy .env to datasheet folder
+  copy:
+    remote_src: true
+    src: credentials/{{ application_name }}.env
+    dest: datasheet-server/.env
+
+- name: copy sheets_config.js to datasheet folder
+  copy:
+    remote_src: true
+    src: credentials/{{ application_name }}_sheets_config.js
+    dest: datasheet-server/src/sheets_config.js
 
 - name: remove container if exists
   docker_container:
@@ -40,5 +58,3 @@
     image: "{{ application_name }}_datasheet_prod"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
-
-
