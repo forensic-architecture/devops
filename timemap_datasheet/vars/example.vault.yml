@@ -7,6 +7,8 @@ mapbox_token: your_mapbox_token
 domain_name: timemap.example.com
 application_name: my_app
 
+use_https: false
+
 timemap:
   features:
     # ...any features

@@ -14,5 +14,5 @@
   import_role:
     name: angstwad.docker_ubuntu
 
-
-
+- pip:
+    name: docker

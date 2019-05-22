@@ -1,6 +1,6 @@
 module.exports = {
   title: '{{ application_name }}',
-  SERVER_ROOT: 'https://{{ domain_name }}/{{ application_name }}-server',
+  SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{ application_name }}-server',
   EVENT_EXT: '/api/{{ application_name }}/export_events/deeprows',
   CATEGORY_EXT: '/api/{{ application_name }}/export_categories/rows',
   SOURCES_EXT: '/api/{{ application_name }}/export_sources/deepids',
@@ -17,6 +17,7 @@ module.exports = {
   },
   store: {
     app: {
+      cover: {{ timemap.store.app.cover | to_nice_json }},
       map: {{ timemap.store.app.map | to_nice_json }},
       timeline: {
         range: [
