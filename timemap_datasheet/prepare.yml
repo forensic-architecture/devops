@@ -6,7 +6,7 @@
 
 - name: install apt packages
   apt:
-    name: ['curl', 'nginx', 'git']
+    name: ['curl', 'nginx', 'git', 'python3-pip']
     state: present
     update_cache: yes
 
