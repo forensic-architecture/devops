@@ -34,6 +34,11 @@ source .env
 ```
 in the folder where the `.env` file is located.
 
+Then install the dependency playbooks:
+```
+ansible-galaxy install angstwad.docker_ubuntu
+```
+
 The playbook can then be run via the command
 ```
 ansible-playbook _master.yml
