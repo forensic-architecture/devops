@@ -1,5 +1,6 @@
 module.exports = {
   title: '{{ application_name }}',
+  display_title: '{{ display_name }}',
   SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{ application_name }}-server',
   EVENT_EXT: '/api/{{ application_name }}/export_events/deeprows',
   CATEGORY_EXT: '/api/{{ application_name }}/export_categories/rows',
