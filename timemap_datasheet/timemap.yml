@@ -48,11 +48,6 @@
     # path: '{{ static_files_folder }}/{{ application_name }}'
     path: '{{ static_files_folder }}'
 
-- name: copy config.js to credentials folder
-  copy:
-    src: timemap/config.js
-    dest: credentials/{{ application_name }}_config.js
-
 - name: copy files from timemap build to server's static files folder
   copy:
     src: timemap/build/
@@ -61,6 +56,10 @@
     # dest: '{{ static_files_folder }}/{{ application_name }}'
     dest: '{{ static_files_folder }}'
 
+- name: copy config.js to credentials folder
+  copy:
+    src: timemap/config.js
+    dest: credentials/{{ application_name }}_config.js
 
 - name: ansible host - remove timemap repo
   local_action:
