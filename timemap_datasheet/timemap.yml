@@ -45,16 +45,16 @@
     state: absent
     # Uncomment the next line and comment the one after if you have multiple
     # timemap instances on the same host.
-    # path: '{{ static_files_folder }}/{{ application_name }}'
-    path: '{{ static_files_folder }}'
+    path: '{{ static_files_folder }}/{{ application_name }}'
+    # path: '{{ static_files_folder }}'
 
 - name: copy files from timemap build to server's static files folder
   copy:
     src: timemap/build/
     # Uncomment the next line and comment the one after if you have multiple
     # timemap instances on the same host.
-    # dest: '{{ static_files_folder }}/{{ application_name }}'
-    dest: '{{ static_files_folder }}'
+    dest: '{{ static_files_folder }}/{{ application_name }}'
+    # dest: '{{ static_files_folder }}'
 
 - name: copy config.js to credentials folder
   copy:

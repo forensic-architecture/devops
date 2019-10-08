@@ -1,4 +1,5 @@
 .DS_Store
 vault.yml
+*vault.yml
 .env
 hosts

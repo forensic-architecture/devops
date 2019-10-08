@@ -10,7 +10,9 @@ module.exports = {
   SITES_EXT: '/api/{{ application_name }}/export_sites/rows',
   NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/rows',
   INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
-  MAPBOX_TOKEN: '{{ mapbox_token }}',
+  {% if mapbox_token is defined %}
+    MAPBOX_TOKEN: '{{ mapbox_token }}',
+  {% endif %}
   features: {
     {% for key, value in timemap.features.items() %}
       {{key}}: {{ 'true' if value else 'false' }},
@@ -18,8 +20,12 @@ module.exports = {
   },
   store: {
     app: {
+      {% if 'app' in timemap.store and 'cover' in timemap.store.app %}
       cover: {{ timemap.store.app.cover | to_nice_json }},
+      {% endif %}
+      {% if 'app' in timemap.store and 'map' in timemap.store.app %}
       map: {{ timemap.store.app.map | to_nice_json }},
+      {% endif %}
       timeline: {
         range: [
           new Date("{{ timemap.store.app.timeline.range[0] }}"),
