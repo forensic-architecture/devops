@@ -3,3 +3,5 @@ vault.yml
 *vault.yml
 .env
 hosts
+tags
+*retry.yml
