@@ -12,7 +12,8 @@ Install Docker.
 
 Setup your Python local environment
 
-```pip install virtualenv
+```
+pip install virtualenv
 virtualenv forensic-devops
 source forensic-devops/bin/activate
 ```

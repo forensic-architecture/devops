@@ -1,6 +1,6 @@
 # Cloud Platform Dev Ops
 
-Ansible play books to create and maintain cloud based resources.
+Ansible playbooks to create and maintain cloud based resources.
 
 # Overview
 
