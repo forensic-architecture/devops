@@ -2,6 +2,7 @@
   vars_files:
     - vars/disk
     - vars/instance
+    - vars/network
   hosts: ansible-hosts
   gather_facts: no
   tasks:
@@ -51,7 +52,6 @@
         network_interfaces:
             - network: "{{ network }}"
               access_configs:
-              - name: "{{ name }}"
-                nat_ip: "{{ access_config_address }}"
+              - name: "{{ access_config_name }}"
+                nat_ip: "{{ address }}"
                 type: "{{ access_config_type }}"
-  
