@@ -14,8 +14,11 @@ Setup your Python local environment
 
 ```pip install virtualenv
 virtualenv forensic-devops
-source forensic-devops/bin/activate```
+source forensic-devops/bin/activate
+```
 
 With Python and pip installed run:
 
-```pip install ansible```
+```
+pip install ansible
+```
