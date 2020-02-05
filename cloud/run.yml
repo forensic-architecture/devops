@@ -8,7 +8,7 @@
   tasks:
     - name: Create a disk sized {{ disk_size }}, from image {{ source_image }}, in zone {{ zone }}
       gcp_compute_disk:
-        name: disk-instance
+        name: 'disk-instance'
         size_gb: '{{ disk_size }}'
         source_image: '{{ source_image }}'
         zone: '{{ zone }}'
@@ -19,16 +19,15 @@
       register: disk
     - name: Create a network
       gcp_compute_network:
-        name: network-instance
+        name: 'network-instance'
         project: "{{lookup('env', 'GCP_PROJECT')}}"
         service_account_file: "{{lookup('env', 'GCP_SERVICE_ACCOUNT_FILE')}}"
         auth_kind: '{{ auth_kind }}'  
         state: present
       register: network
-
     - name: Create an address
       gcp_compute_address:
-        name: address-instance
+        name: 'address-instance'
         region: '{{ region }}'
         project: "{{lookup('env', 'GCP_PROJECT')}}"
         service_account_file: "{{lookup('env', 'GCP_SERVICE_ACCOUNT_FILE')}}"
@@ -50,8 +49,15 @@
             boot: true
             source: "{{ disk }}"
         network_interfaces:
-            - network: "{{ network }}"
-              access_configs:
-              - name: "{{ access_config_name }}"
-                nat_ip: "{{ address }}"
-                type: "{{ access_config_type }}"
+          - network: null
+            access_configs:
+            - name: "{{ access_config_name }}"
+              nat_ip: "{{ address }}"
+              type: "{{ access_config_type }}"
+      register: instance
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ address.address }} port=22 delay=10 timeout=60
+
+    - name: Add host to groupname
+      add_host: hostname={{ address.address }} groupname=new_instances
