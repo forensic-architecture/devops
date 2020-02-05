@@ -1,0 +1,8 @@
+gce_name: forensic-architecture-timemap
+type: f1-micro
+image: debian-9
+zone: us-central1-a
+region: us-central1
+allowed_ports_tcp: tcp:8080
+allowed_ports_udp: udp:8080
+auth_kind: serviceaccount
