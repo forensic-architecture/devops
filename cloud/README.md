@@ -45,7 +45,9 @@ Note the name associated with the key e.g. forensic-ansible-key as you'll use th
 
 For Ansible to talk to GCP you need to install a couple of Python packages:
 
-```pip install requests google-auth```
+```
+pip install requests google-auth
+```
 
 ### Ansible Environment Variables
 
