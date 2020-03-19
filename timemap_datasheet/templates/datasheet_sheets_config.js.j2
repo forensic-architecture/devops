@@ -1,12 +1,12 @@
 import BP from './lib/blueprinters'
 
 const timemapStructure = {
-  export_events: BP.deeprows,
-  export_categories: [BP.groups, BP.rows],
-  export_narratives: BP.rows,
-  export_sources: BP.deepids,
-  export_sites: BP.rows,
-  export_tags: BP.tree,
+  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.events is defined else '' }}export_events: BP.deeprows,
+  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.categories is defined else '' }}export_categories: [BP.groups, BP.rows],
+  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.narratives is defined else '' }}export_narratives: BP.rows,
+  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sources is defined else '' }}export_sources: BP.deepids,
+  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sites is defined else '' }}export_sites: BP.rows,
+  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.tags is defined else '' }}export_tags: BP.tree,
 }
 
 export default {
