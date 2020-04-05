@@ -1,0 +1,10 @@
+plugin: gcp_compute
+projects:
+  - forensic-265906
+zones:
+  - us-central1-a
+filters: []
+groups:
+   forensic_architecture_timemap: "'timemap-demo' in name"
+auth_kind: serviceaccount
+service_account_file: "../../Keys/forensic-265906-b9959b82808f.json"
