@@ -40,6 +40,22 @@ ansible-galaxy install angstwad.docker_ubuntu
 ```
 
 The playbook can then be run via the command
+
 ```
 ansible-playbook _master.yml
 ```
+```
+ansible-playbook -i inventories/webservers_gcp.yml _master.yml --ask-become-pass
+````
+
+Gotchas
+
+ssh-keygen -R 34.68.87.143
+
+forensic-architecture-timemap.us-central1-a.c.forensic-265906.internal
+
+virtualenv devops   source devops/bin/activate
+
+': 'invalid', 'message': \"Invalid value for field 'resource.tags.items[1]': ' https-server'. Must be a match of regex '(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)'\"}], 'code': 400, 'message': \"Invalid value for field 'resource.tags.items[1]': ' https-server'. Must be a match of regex '(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)'\"}}"}
+
+gcloud beta compute --project "forensic-265906" ssh --zone "us-central1-a" "timemap-demo"

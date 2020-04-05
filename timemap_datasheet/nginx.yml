@@ -20,7 +20,7 @@
     state: present
     create: yes
 
-- name: add line in nginx config for timemap alias
+- name: add line in nginx config for timemap alias for {{ application_name }} with domain name:{{ domain_name }} 
   lineinfile:
     dest: /etc/nginx/sites-available/default
     line: "\tlocation /{{ application_name }} {root /var/www/html;}"
