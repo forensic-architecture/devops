@@ -26,7 +26,7 @@ Copy `example.env` to a new `.env` file in the same folder and provide your own 
 Copy `example.vault.yml` to a new `vault.yml` in the same folder. The vault file contains all Timemap/Datasheet specific configuration. See the [Timemap](https://github.com/forensic-architecture/timemap) and [Datasheet-Server](https://github.com/forensic-architecture/datasheet-server) documentation for more infomation.
 
 
-# Running the playbook
+# Running the Playbook
 
 First run
 ```
@@ -34,7 +34,8 @@ source .env
 ```
 in the folder where the `.env` file is located.
 
-Then install the dependency playbooks:
+Then install the dependency Playbooks:
+
 ```
 ansible-galaxy install angstwad.docker_ubuntu
 ```
@@ -43,19 +44,50 @@ The playbook can then be run via the command
 
 ```
 ansible-playbook _master.yml
+
 ```
-```
-ansible-playbook -i inventories/webservers_gcp.yml _master.yml --ask-become-pass
-````
+
+[./timemap_datasheet/GCP_README.md](Google Cloud Platform)
+
+If you need a 
+
+Google Cloud Platform Virtual Machine
 
 Gotchas
 
 ssh-keygen -R 34.68.87.143
 
-forensic-architecture-timemap.us-central1-a.c.forensic-265906.internal
+```
+virtualenv devops   
+source devops/bin/activate
+```
 
-virtualenv devops   source devops/bin/activate
+ git:
+    datasheet_git_repository: 'https://github.com/forensic-architecture/datasheet-server'
+    dest: datasheet-server
+    datasheet_git_branch version: develop
+
+
+module: git
+    timemap_git_repository: 'https://github.com/forensic-architecture/timemap'
+    dest: timemap
+    timemap_git_branch version: develop
+
+
+
+
+ansible-playbook -i inventories/webservers_gcp.yml run_gcp.yml
+
+
+
+ --ask-become-pass
+
+forensic-architecture-timemap.us-central1-a.c.forensic-265906.internal
 
 ': 'invalid', 'message': \"Invalid value for field 'resource.tags.items[1]': ' https-server'. Must be a match of regex '(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)'\"}], 'code': 400, 'message': \"Invalid value for field 'resource.tags.items[1]': ' https-server'. Must be a match of regex '(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)'\"}}"}
 
-gcloud beta compute --project "forensic-265906" ssh --zone "us-central1-a" "timemap-demo"
+
+    # NOTE: no certbot automation, HTTPS still needs to be done manually as the
+    # right options need to be selected. probably easy to fix.
+    # - name: run certbot
+    #   bash: sudo certbot --nginx -d {{ domain_name }}

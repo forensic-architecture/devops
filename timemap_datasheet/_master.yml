@@ -5,10 +5,10 @@
     - ./vars/main.yml
     - ./vars/vault.yml
   tasks:
-    - import_tasks: prepare.yml
-    - import_tasks: datasheet.yml
-    - import_tasks: timemap.yml
-    - import_tasks: nginx.yml
+    - import_tasks: ./tasks/prepare.yml
+    - import_tasks: ./tasks/datasheet.yml
+    - import_tasks: ./tasks/timemap.yml
+    - import_tasks: ./tasks/nginx.yml
 
     - name: restart nginx
       service: name=nginx state=restarted enabled=yes

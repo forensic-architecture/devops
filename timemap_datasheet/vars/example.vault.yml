@@ -1,16 +1,36 @@
 service_account:
   email: service_account@account_name.iam.gserviceaccount.com
   private_key: -----BEGIN PRIVATE YOUR_PRIVATE_KEY_HERE PRIVATE KEY-----\n
-
-mapbox_token: your_mapbox_token
-
-domain_name: timemap.example.com
-application_name: my_app
-
+domain_name: 'your-domain-name.com'
+application_name: 'forensic'
+display_title: 'Your Title'
 use_https: false
-
+display_name: 'Your Display Name'
+mapbox_token: your_mapbox_token
+datasheet:
+  port: 4040
+  sheet_id: 'your-google-sheet-id'
 timemap:
   features:
+    USE_COVER: true
+    USE_TAGS: true
+    USE_SEARCH: true
+    USE_SITES: true
+    USE_SOURCES: true
+    CATEGORIES_AS_TAGS: true
     # ...any features
   store:
     # ...any custom store values
+  ui:
+      # tiles: 'your-mapbox-map-id-'
+      style:
+        categories:
+          'your-category-label': 'your-colour'
+        narratives: 
+          default: 
+            stroke: 'none'
+        shapes: 
+          default: 
+            stroke: 'blue'
+            strokeWidth: 3
+            opacity: 0.9

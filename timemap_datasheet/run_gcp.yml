@@ -1,14 +1,17 @@
 - name: Create a new GCP instance
   vars_files:
-    - vars/disk
-    - vars/instance
-    - vars/network
-  hosts: ansible-hosts
+    - vars/google-cloud-platform/disk
+    - vars/google-cloud-platform/instance
+    - vars/google-cloud-platform/network
+  hosts: ansible
+  become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'False' }}"
+  user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
+
   gather_facts: no
   tasks:
     - name: Create a disk sized {{ disk_size }}, from image {{ source_image }}, in zone {{ zone }}
       gcp_compute_disk:
-        name: "{{ gce_name + 'disk-instance'}}"
+        name: "{{ gce_name + '-disk-instance'}}"
         size_gb: '{{ disk_size }}'
         source_image: '{{ source_image }}'
         zone: '{{ zone }}'

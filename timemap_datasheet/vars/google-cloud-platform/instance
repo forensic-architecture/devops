@@ -1,4 +1,4 @@
-gce_name: timemap-incarceration
+gce_name: forensic-architecture-vm
 type: f1-micro
 image: debian-9
 zone: us-central1-a

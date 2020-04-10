@@ -26,3 +26,8 @@ pip install ansible
 
 https://programmaticponderings.com/2019/01/30/getting-started-with-red-hat-ansible-for-google-cloud-platform/
 
+## Vault.yml
+
+The domain name can also be an IP address
+
+domain_name: '104.154.99.51'
