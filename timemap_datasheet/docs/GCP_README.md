@@ -8,9 +8,7 @@ Google Cloud Platform (GCP), Amazon Web Services (AWS) and Microsoft Azure all p
 
 ## Google Cloud Platform (GCP)
 
-GCP 
-
-Create a Google Account and then register for a GCP account here (you'll need a credit card but GCP has a free tier that is adequate for many uses):
+To use GCP you need to create a standard Google Account and then register for a GCP account here (you'll need a credit card but GCP has a free tier that is adequate for many uses):
 
 [https://cloud.google.com/](https://cloud.google.com/)
 
@@ -18,17 +16,15 @@ Once you have registered you should be able to access the [GCP Console](https://
 
 ## Google Cloud Platform (GCP) Virtual Machine
 
-From here you can manually create a GCP Virtual Machine or run in the Ansible Playbook included here to provision one. To do that you'll need to compete the following steps:  
+From here you can manually create a GCP Virtual Machine or run the Ansible Playbook included here (`create_gcp_vm.yml`) to provision one. To do that you'll need to compete the following steps:  
 
 * Use the GCP console to [Create a project](https://cloud.google.com/resource-manager/docs/creating-managing-projects) 
 
 * Use the GCP console to [Create a service account](https://cloud.google.com/compute/docs/access/service-accounts) for your project on the IAM & admin ⇒ Service accounts tab. Grant the new service account permission to the ‘Compute Admin’ Role, within the project, using the Role drop-down menu. Create a private key for the service account, on the IAM & admin ⇒ Service accounts tab.  Choose the JSON key type. Download the private key JSON file and save it in a safe location, accessible to Ansible. Do not to check this file into source control. This file contains the service account’s credentials used to programmatically access GCP and administer compute resources. This private key contains the credentials for the service account, and is different than the SSH key will add to the project next. 
 
-You now have everything set up in GCP to allow Ansible to run and provision resources.
+### GCP Ansible User Configuration
 
-### Ansible User Configuration
-
-Back on your machine you need to create an SSH public/private key pair. The SSH key will be used to programmatically access the GCE VM. 
+Back on your machine you need to create an SSH public/private key pair. The SSH key will be used to programmatically access the GCP VM. 
 
 On a Mac, you can use the following commands to create a new key pair and copy the public key to the clipboard.
 
@@ -65,6 +61,10 @@ Copy `.example.env` and rename it `.env`. Then open the file and update the foll
 * ANSIBLE_SSH_KEY_PATH - the location of your ssh key you created e.g. `~/.ssh/id_rsa_your_key_name.pub`
 * ANSIBLE_REMOTE_USER - the name you gave the key when you registered it with GCP e.g. `forensic-ansible-user`
 * PYTHON_INTERPRETER - the location of your Python installation e.g. `localansible/bin/python3`
+* ANSIBLE_BECOME - true by default
+* PYTHON_INTERPRETER - the location of your local Python
+* GCP_PROJECT - the GCP Project name'
+* GCP_SERVICE_ACCOUNT_FILE - the location of teh GCP service account key you downloaded.
 
 ## GCP VM Instance Configuration
 
@@ -74,6 +74,14 @@ By default we've configured Ansible to create an `f1-micro debian-9` image in th
 
 Name, type of machine, machine image, geographic locations allowed ports and the authorisation scheme.
 
+By default the VM you will create is named: `forensic-architecture-vm` 
+
+You can change that to your organisation's name in the `vars/google-cloud-platform/instance` template under 
+
+```
+gce_name: forensic-architecture-vm
+```
+
 ### Disk
 
 Size and image source.
@@ -81,19 +89,6 @@ Size and image source.
 ### Network
 
 Network type and name.
-
-## Configure the playbook
-
-
-# Instance Name
-
-By default the VM you will create is called: `forensic-architecture-vm` 
-
-You can change that to your organisation's name in the `vars/google-cloud-platform/instance` template under 
-
-```
-gce_name: forensic-architecture-vm
-```
 
 ## IP Addresses - Static vs Ephemeral
 
@@ -118,20 +113,19 @@ source .env
 The playbook can then be run via the command:
 
 ```
-ansible-playbook create_gcp_vm.yml --ask-become-pass
+ansible-playbook create_gcp_vm.yml
 ```
 
 ## Install Timemap and Datasheet with Ansible
 
+Installing Timemap and Datasheet are no different from installing on a normal server except you pass `inventories/webservers_gcp.yml` as an inventory to dynamically lookup the cloud VM. The run commad is:  
+
 ```
-ansible-playbook -i inventories/webservers_gcp.yml _master.yml --ask-b
-ecome-pass                                                  
+ansible-playbook -i inventories/webservers_gcp.yml _master yml --ask-become-pass                                                  
 ````
 
-   forensic_architecture_timemap: "'forensic-architecture-timemap' in name"
+You will be prompted for your ansible key password. This will install both timemap and datasheet.  
 
 
-
-gcloud beta compute --project "forensic-265906" ssh --zone "us-central1-a" "timemap-demo"
 
 

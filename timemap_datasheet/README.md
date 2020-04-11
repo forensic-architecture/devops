@@ -19,19 +19,28 @@ N.B. copies of the configuration files for both Timemap and Datasheet-Server in 
 
 # Configuration
 
-First make sure [Ansible is installed](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) on the machine that will be running the playbooks. The remote server(s) that Ansible can connect to is specified in the global inventory, which is located in `/etc/ansible/hosts` by default. See Ansible's [documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) for more details on how to configure the inventory.
+First make sure [Ansible is installed](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) on the machine that will be running the playbooks. The remote server(s) that Ansible can connect to is specified in the local inventory, which is located here `./inventories/hosts`. See Ansible's [documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) for more details on how to configure the inventory.
 
 Copy `example.env` to a new `.env` file in the same folder and provide your own host group (a server specified in the inventory) and the location of the ssh key associated with this server.
 
 Copy `example.vault.yml` to a new `vault.yml` in the same folder. The vault file contains all Timemap/Datasheet specific configuration. See the [Timemap](https://github.com/forensic-architecture/timemap) and [Datasheet-Server](https://github.com/forensic-architecture/datasheet-server) documentation for more infomation.
 
+## Vault.yml
+
+Note: the domain name can also be an IP address for example:
+
+```
+domain_name: '104.154.99.51'
+````
 
 # Running the Playbook
 
 First run
+
 ```
 source .env
 ```
+
 in the folder where the `.env` file is located.
 
 Then install the dependency Playbooks:
@@ -46,55 +55,16 @@ The playbook can then be run via the command
 ansible-playbook _master.yml
 
 ```
-
-[./timemap_datasheet/GCP_README.md](Google Cloud Platform)
-
-If you need a 
-
-Google Cloud Platform Virtual Machine
-
-Gotchas
-
-ssh-keygen -R 34.68.87.143
-
-```
-virtualenv devops   
-source devops/bin/activate
-```
-
- git:
-    datasheet_git_repository: 'https://github.com/forensic-architecture/datasheet-server'
-    dest: datasheet-server
-    datasheet_git_branch version: develop
-
-
-module: git
-    timemap_git_repository: 'https://github.com/forensic-architecture/timemap'
-    dest: timemap
-    timemap_git_branch version: develop
-
-
-
-
-ansible-playbook -i inventories/webservers_gcp.yml create_gcp_vm.yml
-
-
-## Vault.yml
-
-The domain name can also be an IP address
-
-domain_name: '104.154.99.51'
-
-
-
- --ask-become-pass
-
-forensic-architecture-timemap.us-central1-a.c.forensic-265906.internal
-
-': 'invalid', 'message': \"Invalid value for field 'resource.tags.items[1]': ' https-server'. Must be a match of regex '(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)'\"}], 'code': 400, 'message': \"Invalid value for field 'resource.tags.items[1]': ' https-server'. Must be a match of regex '(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)'\"}}"}
-
-
     # NOTE: no certbot automation, HTTPS still needs to be done manually as the
     # right options need to be selected. probably easy to fix.
     # - name: run certbot
     #   bash: sudo certbot --nginx -d {{ domain_name }}
+
+
+## Time Map Google Cloud Platform Provisioning
+
+If you don't have a server to run this on currently then you can set one up in the Cloud on a Google Cloud Platform Virtual Machine. For more info see [ReadMe](./timemap_datasheet/docs/GCP_README.md)
+
+
+
+

@@ -23,3 +23,13 @@ With Python and pip installed run:
 ```
 pip install ansible
 ```
+
+## Spaces
+
+## Time Map 
+
+For more info see [ReadMe](./timemap_datasheet/README.md)
+
+## Time Map Google Cloud Platform Provisioning
+
+For more info see [ReadMe](./timemap_datasheet/docs/GCP_README.md)
