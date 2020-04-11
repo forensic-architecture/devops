@@ -1,4 +1,5 @@
 - hosts: forensic_architecture_timemap
+  #  hosts: "{{ lookup('env','ANSIBLE_HOST_GROUP') or 'localhost' }}"
   become: true
   user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
   vars_files:
