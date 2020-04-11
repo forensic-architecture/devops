@@ -5,12 +5,12 @@ module.exports = {
   EVENT_EXT: '/api/{{ application_name }}/export_events/deeprows',
   CATEGORY_EXT: '/api/{{ application_name }}/export_categories/rows',
   SOURCES_EXT: '/api/{{ application_name }}/export_sources/deepids',
-  NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/ids',
+  NARRATIVE_EXT: '/api/{{ application_name }}/narratives/ids',
   TAGS_EXT: '/api/{{ application_name }}/export_tags/tree',
   SITES_EXT: '/api/{{ application_name }}/export_sites/rows',
   NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/rows',
+  INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
   SHAPES_EXT: '/api/{{ application_name }}/export_shapes/columns', 
-  INCOMING_DATETIME_FORMAT: '%d/%m/%YT%H:%M',
   {% if mapbox_token is defined %}
     MAPBOX_TOKEN: '{{ mapbox_token }}',
   {% endif %}
