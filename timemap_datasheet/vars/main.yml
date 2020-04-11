@@ -3,8 +3,8 @@ application_name: example
 static_files_folder: /var/www/html
 use_https: false
 datasheet:
-  port: 4040
-  sheet_id: '1ej3kEtANGYsEBUCTfWsIR0UhTSJIuXFHLYspti2sgHo'
+  port: 8080
+  sheet_id: 1azgS6mBrSVewQU-Zwek7aMA9HWV2LU-3lb_0PzxGkjs
 timemap:
   features:
     USE_COVER: false
