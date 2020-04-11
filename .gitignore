@@ -5,6 +5,6 @@ vault.yml
 hosts
 tags
 *retry.yml
-devops
+forensic-devops
 ansible
 coverage
