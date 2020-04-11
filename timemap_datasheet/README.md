@@ -76,7 +76,7 @@ module: git
 
 
 
-ansible-playbook -i inventories/webservers_gcp.yml run_gcp.yml
+ansible-playbook -i inventories/webservers_gcp.yml create_gcp_vm.yml
 
 
 

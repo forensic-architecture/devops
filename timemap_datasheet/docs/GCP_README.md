@@ -118,7 +118,7 @@ source .env
 The playbook can then be run via the command:
 
 ```
-ansible-playbook run_gcp.yml --ask-become-pass
+ansible-playbook create_gcp_vm.yml --ask-become-pass
 ```
 
 ## Install Timemap and Datasheet with Ansible
