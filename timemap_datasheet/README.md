@@ -79,6 +79,13 @@ module: git
 ansible-playbook -i inventories/webservers_gcp.yml create_gcp_vm.yml
 
 
+## Vault.yml
+
+The domain name can also be an IP address
+
+domain_name: '104.154.99.51'
+
+
 
  --ask-become-pass
 

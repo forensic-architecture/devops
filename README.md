@@ -4,13 +4,11 @@ Ansible playbooks, terraform templates, and other infrastructure-as-code develop
 
 ## Dependencies
 
-## Docker set up
+The main dependencies at this time are Python and Ansible.   
 
-Install Docker.
+### Python and Pip set up
 
-## Ansible set up
-
-Setup your Python local environment
+Install [Python](https://www.python.org/) and [pip3](https://pip.pypa.io/en/stable/installing/) then use Pip to set up your Python local environment:
 
 ```
 pip install virtualenv
@@ -18,16 +16,10 @@ virtualenv forensic-devops
 source forensic-devops/bin/activate
 ```
 
+### Ansible set up
+
 With Python and pip installed run:
 
 ```
 pip install ansible
 ```
-
-https://programmaticponderings.com/2019/01/30/getting-started-with-red-hat-ansible-for-google-cloud-platform/
-
-## Vault.yml
-
-The domain name can also be an IP address
-
-domain_name: '104.154.99.51'
