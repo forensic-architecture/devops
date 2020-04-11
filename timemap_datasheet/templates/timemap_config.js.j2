@@ -8,6 +8,7 @@ module.exports = {
   NARRATIVE_EXT: '/api/{{ application_name }}/narratives/ids',
   TAGS_EXT: '/api/{{ application_name }}/export_tags/tree',
   NARRATIVE_EXT: '/api/{{ application_name }}/export_narratives/rows',
+  SITES_EXT: '/api/{{ application_name }}/export_sites/rows',
   INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
   {% if mapbox_token is defined %}
     MAPBOX_TOKEN: '{{ mapbox_token }}',
