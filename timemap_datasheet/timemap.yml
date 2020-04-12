@@ -12,9 +12,9 @@
 - name: ansible host - checkout timemap repo
   local_action:
     module: git
-    repo: 'https://github.com/forensic-architecture/timemap'
+    repo: "{{ lookup('env', 'TIMEMAP_GIT_REPOSITORY') or 'https://github.com/forensic-architecture/timemap' }}"
     dest: timemap
-    version: develop
+    version: "{{ lookup('env', 'DATASHEET_GIT_REPOSITORY') or 'develop' }}"
 
 - name: copy config.js to timemap
   local_action:
