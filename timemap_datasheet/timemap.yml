@@ -14,7 +14,7 @@
     module: git
     repo: "{{ lookup('env', 'TIMEMAP_GIT_REPOSITORY') or 'https://github.com/forensic-architecture/timemap' }}"
     dest: timemap
-    version: "{{ lookup('env', 'DATASHEET_GIT_REPOSITORY') or 'develop' }}"
+    version: "{{ lookup('env', 'TIMEMAP_GIT_BRANCH') or 'develop' }}"
 
 - name: copy config.js to timemap
   local_action:
