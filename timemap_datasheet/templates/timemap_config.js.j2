@@ -5,27 +5,26 @@ module.exports = {
   EVENT_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.events is defined else '' }}export_events/deeprows',
   CATEGORY_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.categories is defined else '' }}export_categories/rows',
   SOURCES_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sources is defined else '' }}export_sources/deepids',
-  NARRATIVE_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.narratives is defined else '' }}narratives/ids',
+  NARRATIVE_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.narratives is defined else '' }}export_narratives/rows',
   TAGS_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.tags is defined else '' }}export_tags/tree',
   SITES_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sites is defined else '' }}export_sites/rows',
-  NARRATIVE_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.narratives is defined else '' }}export_narratives/rows',
-  INCOMING_DATETIME_FORMAT: '%m/%d/%YT%H:%M',
-  {% if mapbox_token is defined %}
-    MAPBOX_TOKEN: '{{ mapbox_token }}',
-  {% endif %}
+  INCOMING_DATETIME_FORMAT: '{{ datetime_format if datetime_format is defined else '%m/%d/%YT%H:%M'}}',
+{% if mapbox_token is defined %}
+  MAPBOX_TOKEN: '{{ mapbox_token }}',
+{% endif %}
   features: {
-    {% for key, value in timemap.features.items() %}
-      {{key}}: {{ 'true' if value else 'false' }},
-    {% endfor %}
+{% for key, value in timemap.features.items() %}
+    {{key}}: {{ 'true' if value else 'false' }},
+{% endfor %}
   },
   store: {
     app: {
-      {% if 'app' in timemap.store and 'cover' in timemap.store.app %}
+{% if 'app' in timemap.store and 'cover' in timemap.store.app %}
       cover: {{ timemap.store.app.cover | to_nice_json }},
-      {% endif %}
-      {% if 'app' in timemap.store and 'map' in timemap.store.app %}
+{% endif %}
+{% if 'app' in timemap.store and 'map' in timemap.store.app %}
       map: {{ timemap.store.app.map | to_nice_json }},
-      {% endif %}
+{% endif %}
       timeline: {
         range: [
           new Date("{{ timemap.store.app.timeline.range[0] }}"),
