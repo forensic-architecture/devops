@@ -63,7 +63,7 @@ ansible-playbook _master.yml
 
 ## Time Map Google Cloud Platform Provisioning
 
-If you don't have a server to run this on currently then you can set one up in the Cloud on a Google Cloud Platform Virtual Machine. For more info see [ReadMe](./timemap_datasheet/docs/GCP_README.md)
+If you don't have a server to install Timemap on then you can set one up in the Cloud on a Google Cloud Platform Virtual Machine. For more info see [ReadMe](./timemap_datasheet/docs/GCP_README.md)
 
 
 
