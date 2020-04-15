@@ -9,7 +9,6 @@ module.exports = {
   TAGS_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.tags is defined else '' }}export_tags/tree',
   SITES_EXT: '/api/{{ application_name }}/{{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sites is defined else '' }}export_sites/rows',
   INCOMING_DATETIME_FORMAT: '{{ datetime_format if datetime_format is defined else '%m/%d/%YT%H:%M'}}',
-  SITES_EXT: '/api/{{ application_name }}/export_sites/rows',
 {% if mapbox_token is defined %}
   MAPBOX_TOKEN: '{{ mapbox_token }}',
 {% endif %}
