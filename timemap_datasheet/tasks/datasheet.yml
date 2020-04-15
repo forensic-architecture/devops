@@ -6,10 +6,10 @@
 
 - name: checkout develop branch of datasheet
   git:
-    repo: 'https://github.com/forensic-architecture/datasheet-server'
+    repo: "{{ lookup('env', 'DATASHEET_GIT_REPOSITORY') or 'https://github.com/forensic-architecture/datasheet-server' }}"
     dest: datasheet-server
-    version: develop
-
+    version: "{{ lookup('env', 'DATASHEET_GIT_BRANCH') or 'develop' }}"
+    
 - name: create credentials folder if it does not already exist
   file:
     path: credentials

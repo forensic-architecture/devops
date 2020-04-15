@@ -25,13 +25,23 @@ Copy `example.env` to a new `.env` file in the same folder and provide your own 
 
 Copy `example.vault.yml` to a new `vault.yml` in the same folder. The vault file contains all Timemap/Datasheet specific configuration. See the [Timemap](https://github.com/forensic-architecture/timemap) and [Datasheet-Server](https://github.com/forensic-architecture/datasheet-server) documentation for more infomation.
 
-## Vault.yml
+## Branch or Forked Git Repository
+
+If you are working on a branch or forked repo you can override the Forensic Architecture defaults in `.env` as follows:
+
+```
+# override the defaults below with your own forked repository
+# export DATASHEET_GIT_REPOSITORY='https://github.com/forensic-architecture/datasheet-server'
+# export DATASHEET_GIT_BRANCH='develop'
+# export TIMEMAP_GIT_REPOSITORY='https://github.com/forensic-architecture/timemap'
+# export TIMEMAP_GIT_BRANCH='develop'
+```
 
 Note: the domain name can also be an IP address for example:
 
 ```
 domain_name: '104.154.99.51'
-````
+```
 
 # Running the Playbook
 
