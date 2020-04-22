@@ -1,0 +1,80 @@
+- name: Create a new GCP instance
+  hosts: ansible
+  become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'False' }}"
+  vars:
+    ansible_python_interpreter: "{{lookup('env', 'PYTHON_INTERPRETER')}}"
+  vars_files:
+    - vars/google-cloud-platform/disk
+    - vars/google-cloud-platform/instance
+    - vars/google-cloud-platform/network
+  
+  tasks:
+    - name: Create a disk sized {{ disk_size }}, from image {{ source_image }}, in zone {{ zone }}
+      gcp_compute_disk:
+        name: "{{ gce_name + 'disk-instance'}}"
+        size_gb: '{{ disk_size }}'
+        source_image: '{{ source_image }}'
+        zone: '{{ zone }}'
+        auth_kind: '{{ auth_kind }}'
+        project: "{{lookup('env', 'GCP_PROJECT')}}"
+        service_account_file: "{{lookup('env', 'GCP_SERVICE_ACCOUNT_FILE')}}"
+        state: present
+        scopes:
+           - https://www.googleapis.com/auth/compute
+      register: disk
+    - name: Create a network
+      gcp_compute_network:
+        name: 'network-instance'
+        project: "{{lookup('env', 'GCP_PROJECT')}}"
+        service_account_file: "{{lookup('env', 'GCP_SERVICE_ACCOUNT_FILE')}}"
+        auth_kind: '{{ auth_kind }}'  
+        state: present
+        scopes:
+           - https://www.googleapis.com/auth/compute
+      register: network
+    - name: Create an address
+      gcp_compute_address:
+        name: 'address-instance'
+        region: '{{ region }}'
+        project: "{{lookup('env', 'GCP_PROJECT')}}"
+        service_account_file: "{{lookup('env', 'GCP_SERVICE_ACCOUNT_FILE')}}"
+        auth_kind: '{{ auth_kind }}'  
+        state: present
+        scopes:
+           - https://www.googleapis.com/auth/compute
+      register: address
+    
+    - name: Create GCE instance on {{ gce_name }}, machine {{ type }}, image {{ image }}
+      gcp_compute_instance:
+        name: "{{ gce_name }}"
+        machine_type: "{{ type }}"
+        zone: "{{ zone }}"
+        project: "{{lookup('env', 'GCP_PROJECT')}}"
+        service_account_file: "{{lookup('env', 'GCP_SERVICE_ACCOUNT_FILE')}}"
+        auth_kind: '{{ auth_kind }}'  
+        metadata: {}
+        disks:
+          - auto_delete: true
+            boot: true
+            source: "{{ disk }}"
+        network_interfaces:
+          - network: null
+            access_configs:
+            - name: "{{ access_config_name }}"
+              type: "{{ access_config_type }}"
+              # nat_ip: "{{ address }}"
+              # when 
+        scopes:
+           - https://www.googleapis.com/auth/compute
+        tags:
+          items:
+            - http-server
+            - https-server
+                  
+      register: instance
+
+    - name: Wait for SSH to come up {{ address.address }}
+      wait_for: host={{ address.address }} port=22 delay=15 timeout=60
+
+    - name: Add host to groupname
+      add_host: hostname={{ address.address }} groupname=new_instances
