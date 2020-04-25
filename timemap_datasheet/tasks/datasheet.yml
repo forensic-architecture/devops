@@ -16,11 +16,11 @@
     state: directory
 
 - name: copy .env to credentials folder
-  template: src=templates/datasheet-env.j2 dest=credentials/{{application_name}}.env
+  template: src=../templates/datasheet-env.j2 dest=credentials/{{application_name}}.env
 
 - name: copy sheets_config.js to credentials folder
   template: >
-    src=templates/datasheet_sheets_config.js.j2
+    src=../templates/datasheet_sheets_config.js.j2
     dest=credentials/{{ application_name }}_sheets_config.js
 
 - name: copy .env to datasheet folder

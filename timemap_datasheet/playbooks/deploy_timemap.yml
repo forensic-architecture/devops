@@ -1,14 +1,14 @@
-- hosts: "{{ lookup('env','ANSIBLE_HOST_GROUP') or 'localhost' }}"
+- hosts: "{{ lookup('env', 'ANSIBLE_HOST_GROUP') or 'localhost' }}"
   become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'False' }}"
   user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
   vars_files:
-    - ./vars/main.yml
-    - ./vars/vault.yml
+    - ../vars/main.yml
+    - ../vars/vault.yml
   tasks:
-    - import_tasks: ./tasks/prepare.yml
-    - import_tasks: ./tasks/datasheet.yml
-    - import_tasks: ./tasks/timemap.yml
-    - import_tasks: ./tasks/nginx.yml
+    - import_tasks: ../tasks/prepare.yml
+    - import_tasks: ../tasks/datasheet.yml
+    - import_tasks: ../tasks/timemap.yml
+    - import_tasks: ../tasks/nginx.yml
 
     - name: restart nginx
       service: name=nginx state=restarted enabled=yes

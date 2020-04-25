@@ -14,7 +14,7 @@
   when: nginx_default_config_file.stat.exists == True
 
 - name: create a default nginx configuration file if it doesn't exist
-  template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
+  template: src=../templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
   when: (nginx_default_config_file.stat.exists == False) or (nginx_default_config.stdout.find('server_name _;') != -1)
 
 - name: add line in nginx config for server reverse proxy

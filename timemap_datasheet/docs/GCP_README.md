@@ -129,7 +129,7 @@ ansible-playbook create_gcp_vm.yml
 
 ## 6) Run Ansible to install and run Timemap and Datasheet
 
-Installing Timemap and Datasheet are no different from installing on a normal server except you pass `inventories/webservers_gcp.yml` as an inventory to dynamically lookup the cloud VM. The run commad is:  
+Installing Timemap and Datasheet is no different from installing on a normal server except you pass `inventories/webservers_gcp.yml` as an inventory to dynamically lookup the cloud VM. The run commad is:  
 
 ```
 ansible-playbook -i inventories/webservers_gcp.yml _master yml --ask-become-pass                                                  

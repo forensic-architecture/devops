@@ -19,13 +19,13 @@
 - name: copy config.js to timemap
   local_action:
     module: template
-    src: templates/timemap_config.js.j2
+    src: ../templates/timemap_config.js.j2
     dest: timemap/config.js
 
 - name: copy index.html to timemap
   local_action:
     module: template
-    src: templates/index.html.j2
+    src: ../templates/index.html.j2
     dest: timemap/index.html
 
 - name: install packages on ansible host
