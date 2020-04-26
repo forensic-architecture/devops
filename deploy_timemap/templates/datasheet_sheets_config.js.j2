@@ -10,11 +10,9 @@ const timemapStructure = {
 }
 
 export default {
-  googleSheets: {
-    sheets: [{
-      name: '{{ application_name }}',
-      id: '{{ datasheet.sheet_id }}',
-      tabs: timemapStructure
-    }]
-  }
+  gsheets: [{
+    name: '{{ application_name }}',
+    id: '{{ datasheet.sheet_id }}',
+    tabs: timemapStructure
+  }]
 }
