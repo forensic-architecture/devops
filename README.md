@@ -30,6 +30,6 @@ pip install ansible
 
 For more info see [ReadMe](./timemap_datasheet/README.md)
 
-## Time Map Google Cloud Platform Provisioning
+## Time Map Infrastructure Terraform Provisioning
 
-For more info see [ReadMe](./timemap_datasheet/docs/GCP_README.md)
+For more info see [ReadMe](./timemap_datasheet/docs/terraform_readme.md)

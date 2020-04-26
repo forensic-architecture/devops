@@ -10,8 +10,11 @@ variable "image" {
 variable "instance_name" {
   default = "forensic-architecture-vm"
 }
+variable "bucket_name" {
+  default = "forensic-architecture-bucket"
+}
 variable "project_name" {
-  #  declare in terraform.tfvars 
+  #  declared in terraform.tfvars 
 }
 provider "google" {
   project = var.project_name
@@ -19,7 +22,7 @@ provider "google" {
 }
 
 resource "google_storage_bucket" "forensic-architecture-bucket" {
-  name               = "forensic-architecture-bucket"
+  name               = var.bucket_name
   force_destroy      = true
   bucket_policy_only = true
 }
@@ -50,5 +53,5 @@ resource "google_compute_instance" "forensic-architecture-vm" {
 }
 
 output "GCP-instance-ip" {
-  value = google_compute_instance.forensic-architecture-vm.network_interface.0.access_config.0.nat_ip 
+  value = google_compute_instance.forensic-architecture-vm.network_interface.0.access_config.0.nat_ip
 }

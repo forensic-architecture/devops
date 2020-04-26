@@ -9,16 +9,17 @@ variable "key_name" {
 }
 variable "private_key_location" {
 }
-
-
-variable "machine_type" {
-  default = "f1-micro"
+variable "instance_type" {
+  default = "t2.micro"
 }
-variable "image" {
-  default = "projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts"
+variable "ami" {
+  default = "ami-2757f631"
 }
 variable "instance_name" {
   default = "forensic-architecture-vm"
+}
+variable "connection_user" {
+  default = "ubuntu"
 }
 
 provider "aws" {
@@ -37,16 +38,16 @@ resource "aws_s3_bucket" "forensic-architecture-bucket" {
 
 
 resource "aws_instance" "forensic-architecture-vm" {
-  ami             = "ami-2757f631"
-  instance_type   = "t2.micro"
+  ami             = var.ami
+  instance_type   = var.instance_type
   tags            = { Name = var.instance_name }
-  key_name        = "forensic-architecture-admin"
+  key_name        = var.key_name
   security_groups = [aws_security_group.forensic-architecture-web-node.name]
   depends_on      = [aws_s3_bucket.forensic-architecture-bucket]
   connection {
     type        = "ssh"
     host        = self.public_ip
-    user        = "ubuntu"
+    user        = var.connection_user
     private_key = file(var.private_key_location)
   }
   provisioner "remote-exec" {
@@ -58,9 +59,9 @@ resource "aws_instance" "forensic-architecture-vm" {
 }
 
 resource "aws_eip" "EC2-IP-address" {
-  vpc      = true
-  instance = aws_instance.forensic-architecture-vm.id
-
+  vpc        = true
+  instance   = aws_instance.forensic-architecture-vm.id
+  depends_on = [aws_instance.forensic-architecture-vm]
 }
 
 resource "aws_security_group" "forensic-architecture-web-node" {
@@ -78,12 +79,6 @@ resource "aws_security_group" "forensic-architecture-web-node" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  ingress {
-    from_port   = 5901
-    to_port     = 5901
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -93,5 +88,5 @@ resource "aws_security_group" "forensic-architecture-web-node" {
 }
 
 output "EC2-instance-ip" {
-  value = aws_instance.forensic-architecture-vm.public_ip
+  value = aws_eip.EC2-IP-address.public_ip
 }
