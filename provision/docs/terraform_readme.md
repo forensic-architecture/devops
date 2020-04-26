@@ -32,14 +32,6 @@ Terraform needs initialised prior to use. Run:
 terraform init
 ```
 
-## Configure and initialise the .env file
-
-You'll find instruction in the `example.env`file for how to configure GCP or AWS. Once you have updated the variables run this in the terminal:
- 
-```
-source .env
-```
-
 ## Configure Terraform Variables
 
 The Terraform scripts come with some defaults but you will still need to update a couple of security credential related variables. To do that copy:
@@ -65,7 +57,7 @@ Terraform will ask you to confirm making changes to your infrastructure and when
 EC2-instance-ip = 34.228.180.239
 ```
 
-Copy the IP address as you need to update your `vault.yml` file *domain name* with that IP and you also need to update the `inventories/hosts` file with the IP address.  
+Copy the IP address as you need to update your `vault.yml` file *domain name* with that IP and you also need to update the `deploy_timemap/inventories/hosts` file with the IP address.  
 
 #### IP Addresses - Static vs Ephemeral
 
@@ -74,4 +66,4 @@ When the scripts run they create an 'ephemeral' external IP address for the VM b
 'Ephemeral' means that every time you stop and start the VM it will be assigned a new IP address and you will have to use that new address. If you don't stop and start it will retain the IP address and this may be enough for you for test and demonstration purposes. It is also possible to create VM with a static external IP address but you can only have one resource at a time using a static external IP address in a project.
 You can rerun Terraform to change infrastructure at any time and you can also destroy all the Timemap related infrastructure at any time.
 
-Your infrastructure is now ready to be provisioned with Timemap and Datasheet as described in the timemap_datasheet [README.md](../README.md)
+Your infrastructure is now ready to be provisioned with Timemap and Datasheet as described in the deploy_timemap [README.md](../../deploy_timemap/README.md)

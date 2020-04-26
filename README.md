@@ -28,8 +28,8 @@ pip install ansible
 
 ## Time Map 
 
-For more info see [ReadMe](./timemap_datasheet/README.md)
+For more info see [ReadMe](./deploy_timemap/README.md)
 
 ## Time Map Infrastructure Terraform Provisioning
 
-For more info see [ReadMe](./timemap_datasheet/docs/terraform_readme.md)
+For more info see [ReadMe](./provision/docs/terraform_readme.md)

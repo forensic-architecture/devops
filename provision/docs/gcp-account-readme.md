@@ -41,4 +41,15 @@ Add your new public key clipboard contents to the project, on the Compute Engine
 
 Note the name associated with the key e.g. forensic-ansible-key as you'll use that to configure Ansible.
 
-You should no be able to follow the instructions in [terraform_readme.md](terraform_readme.md) to provision your infrastructure. 
+
+## Configure and initialise the .env file
+
+You'll find instruction in the `example.env`file for how to configure GCP. Once you have updated the variables run this in the terminal:
+ 
+```
+source .env
+```
+
+You should now be able to follow the instructions in [terraform_readme.md](terraform_readme.md) to provision your infrastructure. 
+
+

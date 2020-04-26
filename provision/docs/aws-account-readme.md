@@ -29,4 +29,4 @@ The AWS CLI needs to be configured with security credentials so it can connect t
 
 Follow the instructions here: [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) and for the AWS Credentials pay special attention to the section 'To create access keys for an IAM user'.
 
-You should no be able to follow the instructions in [terraform_readme.md](terraform_readme.md) to provision your infrastructure. 
+You should now be able to follow the instructions in [terraform_readme.md](terraform_readme.md) to provision your infrastructure. 
