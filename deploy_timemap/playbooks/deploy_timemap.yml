@@ -14,6 +14,6 @@
       service: name=nginx state=restarted enabled=yes
 
     # NOTE: no certbot automation, HTTPS still needs to be done manually as the
-    # right options need to be selected. plsrobably easy to fix.
+    # right options need to be selected. probably easy to fix.
     # - name: run certbot
     #   bash: sudo certbot --nginx -d {{ domain_name }}
