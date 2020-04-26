@@ -6,7 +6,6 @@ hosts
 tags
 *retry.yml
 forensic-devops
-ansible
 coverage
 
 terraform.*
