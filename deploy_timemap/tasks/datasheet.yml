@@ -65,7 +65,7 @@
 
 - name: interpolate volume strings for XLSX
   set_fact:
-    xlsx_volumes: "{{ datasheet.xlsx | json_query('[].name') | map('regex_replace', '(^.*$)', 'xlsx/\\1.xlsx:/\\1.xlsx') | list }}"
+    xlsx_volumes: "{{ datasheet.xlsx | json_query('[].name') | map('regex_replace', '(^.*$)', ansible_env.HOME + '/xlsx/\\1.xlsx:/\\1.xlsx') | list }}"
 
 - name: run datasheet-server in container
   docker_container:
