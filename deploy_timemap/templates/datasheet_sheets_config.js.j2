@@ -1,18 +1,52 @@
 import BP from './lib/blueprinters'
 
-const timemapStructure = {
-  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.events is defined else '' }}export_events: BP.deeprows,
-  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.categories is defined else '' }}export_categories: [BP.groups, BP.rows],
-  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.narratives is defined else '' }}export_narratives: BP.rows,
-  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sources is defined else '' }}export_sources: BP.deepids,
-  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.sites is defined else '' }}export_sites: BP.rows,
-  {{ application_name+'_' if prefix_sheet_tabs is defined and prefix_sheet_tabs.tags is defined else '' }}export_tags: BP.tree,
+{% if datasheet.gsheets is defined %}
+{% for sheet in datasheet.gsheets %}
+const {{ sheet.name }}Structure = {
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.events is defined else '' }}export_events: BP.deeprows,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.categories is defined else '' }}export_categories: [BP.groups, BP.rows],
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.narratives is defined else '' }}export_narratives: BP.rows,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sources is defined else '' }}export_sources: BP.deepids,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sites is defined else '' }}export_sites: BP.rows,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.tags is defined else '' }}export_tags: BP.tree,
 }
+{% endfor %}
+{% endif %}
+
+{% if datasheet.xlsx is defined %}
+{% for sheet in datasheet.xlsx %}
+const {{ sheet.name }}Structure = {
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.events is defined else '' }}export_events: BP.deeprows,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.categories is defined else '' }}export_categories: [BP.groups, BP.rows],
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.narratives is defined else '' }}export_narratives: BP.rows,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sources is defined else '' }}export_sources: BP.deepids,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sites is defined else '' }}export_sites: BP.rows,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.tags is defined else '' }}export_tags: BP.tree,
+}
+{% endfor %}
+{% endif %}
 
 export default {
-  gsheets: [{
-    name: '{{ application_name }}',
-    id: '{{ datasheet.sheet_id }}',
-    tabs: timemapStructure
-  }]
+  gsheets: [
+  {% if datasheet.gsheets is defined %}
+  {% for sheet in datasheet.gsheets %}
+  {
+    name: '{{ sheet.name }}',
+    id: '{{ sheet.id }}',
+    tabs: {{ sheet.name }}Structure
+  }
+  {% endfor %}
+  {% endif %}
+  ],
+  xlsx: [
+  {% if datasheet.xlsx is defined %}
+  {% for sheet in datasheet.xlsx %}
+  {
+    name: '{{ sheet.name }}',
+    path: '/{{ sheet.name }}.xlsx', /* passed from local->instance->docker volume */
+    tabs: {{ sheet.name }}Structure
+  }
+  {% endfor %}
+  {% endif %}
+  ]
 }

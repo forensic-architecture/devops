@@ -16,45 +16,61 @@
     state: directory
 
 - name: copy .env to credentials folder
-  template: src=../templates/datasheet-env.j2 dest=credentials/{{application_name}}.env
+  template: src=../templates/datasheet-env.j2 dest=credentials/{{timemap.name}}.env
 
 - name: copy sheets_config.js to credentials folder
   template: >
     src=../templates/datasheet_sheets_config.js.j2
-    dest=credentials/{{ application_name }}_sheets_config.js
+    dest=credentials/{{ timemap.name }}_sheets_config.js
+
+- name: create XLSX folder if it does not already exist
+  file:
+    path: xlsx
+    state: directory
+
+- name: copy XLSX files to credentials folder
+  copy:
+    src: "{{ item.path }}"
+    dest: xlsx/{{ item.name }}.xlsx
+  loop: "{{ datasheet.xlsx }}"
 
 - name: copy .env to datasheet folder
   copy:
     remote_src: true
-    src: credentials/{{ application_name }}.env
+    src: credentials/{{ timemap.name }}.env
     dest: datasheet-server/.env
 
 - name: copy sheets_config.js to datasheet folder
   copy:
     remote_src: true
-    src: credentials/{{ application_name }}_sheets_config.js
+    src: credentials/{{ timemap.name }}_sheets_config.js
     dest: datasheet-server/src/sheets_config.js
 
 - name: remove container if exists
   docker_container:
-    name: "{{ application_name }}_datasheet"
+    name: "{{ timemap.name }}_datasheet"
     state: absent
     force_kill: true
 
 - name: remove image if exists
   docker_image:
     state: absent
-    name: "{{ application_name }}_datasheet_prod"
+    name: "{{ timemap.name }}_datasheet_prod"
     force: true
 
 - name: build docker image
   docker_image:
     path: datasheet-server
-    name: "{{ application_name }}_datasheet_prod"
+    name: "{{ timemap.name }}_datasheet_prod"
+
+- name: interpolate volume strings for XLSX
+  set_fact:
+    xlsx_volumes: "{{ datasheet.xlsx | json_query('[].name') | map('regex_replace', '(^.*$)', 'xlsx/\\1.xlsx:/\\1.xlsx') | list }}"
 
 - name: run datasheet-server in container
   docker_container:
-    name: "{{ application_name }}_datasheet"
-    image: "{{ application_name }}_datasheet_prod"
+    name: "{{ timemap.name }}_datasheet"
+    image: "{{ timemap.name }}_datasheet_prod"
+    volumes: "{{ xlsx_volumes | list }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
