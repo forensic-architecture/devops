@@ -4,7 +4,7 @@ Ansible playbooks, terraform templates, and other infrastructure-as-code develop
 
 ## Dependencies
 
-The main dependencies at this time are Python and Ansible.   
+The main dependencies at this time are Python, Ansible, and Terraform.
 
 ### Python and Pip set up
 
@@ -24,12 +24,23 @@ With Python and pip installed run:
 pip install ansible
 ```
 
-## Spaces
+### Terraform set up
 
-## Time Map 
+Installation instructions can be found in [provision/README.md](./provision/README.md).
 
-For more info see [ReadMe](./deploy_timemap/README.md)
+## provision 
 
-## Time Map Infrastructure Terraform Provisioning
+For more info see [provision/README.md](./provision/README.md).
 
-For more info see [ReadMe](./provision/docs/terraform_readme.md)
+### deploy_timemap
+
+A set of ansible playbooks to deploy new instances of
+[Timemap](https://github.com/forensic-architecture/timemap), along with a fully
+configured [Datasheet Server](https://github.com/datasheet-server) backend, to
+a cloud instance. For more info see
+[deploy_timemap/README.md](./deploy_timemap/README.md)
+
+### update_spaces
+
+Ansible playbooks to manage Digital Ocean spaces. For more info see
+[update_spaces/README.md](./update_spaces/README.md).
