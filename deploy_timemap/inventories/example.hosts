@@ -1,0 +1,9 @@
+## default configuration
+[ansible]
+localhost ansible_connection=local
+
+## aws hosts go here
+## [aws]
+
+## gcp hosts go here
+## [gcp]

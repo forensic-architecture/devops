@@ -6,11 +6,16 @@
 - name: check if default nginx config exists
   stat:
     path: /etc/nginx/sites-available/default
-  register: stat_result
+  register: nginx_default_config_file
+
+- name: read the nginx default config
+  shell: cat /etc/nginx/sites-available/default
+  register: nginx_default_config
+  when: nginx_default_config_file.stat.exists == True
 
 - name: create a default nginx configuration file if it doesn't exist
-  template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
-  when: stat_result.stat.exists == False
+  template: src=../templates/nginx.conf.j2 dest=/etc/nginx/sites-available/default
+  when: (nginx_default_config_file.stat.exists == False) or (nginx_default_config.stdout.find('server_name _;') != -1)
 
 - name: add line in nginx config for server reverse proxy
   lineinfile:
@@ -20,7 +25,7 @@
     state: present
     create: yes
 
-- name: add line in nginx config for timemap alias
+- name: add line in nginx config for timemap alias for {{ application_name }} with domain name:{{ domain_name }} 
   lineinfile:
     dest: /etc/nginx/sites-available/default
     line: "\tlocation /{{ application_name }} {root /var/www/html;}"

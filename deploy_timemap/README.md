@@ -19,11 +19,17 @@ N.B. copies of the configuration files for both Timemap and Datasheet-Server in 
 
 # Configuration
 
-First make sure [Ansible is installed](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) on the machine that will be running the playbooks. The remote server(s) that Ansible can connect to is specified in the global inventory, which is located in `/etc/ansible/hosts` by default. See Ansible's [documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) for more details on how to configure the inventory.
+First make sure [Ansible is installed](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) on the machine that will be running the playbooks. The remote server(s) that Ansible can connect to is specified in the local inventory, which is located here `./inventories/hosts`. See Ansible's [documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) for more details on how to configure the inventory.
 
-Copy `example.env` to a new `.env` file in the same folder and provide your own host group (a server specified in the inventory) and the location of the ssh key associated with this server.
+Copy `example.env` to a new `.env` file in the same folder and provide your own host group (a server specified in the `inventories/hosts` file) and the location of the ssh key associated with this server.
 
 Copy `example.vault.yml` to a new `vault.yml` in the same folder. The vault file contains all Timemap/Datasheet specific configuration. See the [Timemap](https://github.com/forensic-architecture/timemap) and [Datasheet-Server](https://github.com/forensic-architecture/datasheet-server) documentation for more infomation.
+
+Note: the domain name can also be an IP address for example:
+
+```
+domain_name: '104.154.99.51'
+```
 
 ## Branch or Forked Git Repository
 
@@ -37,20 +43,29 @@ If you are working on a branch or forked repo you can override the Forensic Arch
 # export TIMEMAP_GIT_BRANCH='develop'
 ```
 
-# Running the playbook
+# Running the Playbook
 
 First run
+
 ```
 source .env
 ```
+
 in the folder where the `.env` file is located.
 
-Then install the dependency playbooks:
+Then install the dependency Playbooks:
+
 ```
 ansible-galaxy install angstwad.docker_ubuntu
 ```
 
 The playbook can then be run via the command
+
 ```
-ansible-playbook _master.yml
+ansible-playbook playbooks/deploy_timemap.yml
+
 ```
+
+## Time Map Cloud Infrastructure Provisioning
+
+If you don't have a server to install Timemap on then you can set one up in the Cloud on a Google Cloud Platform Virtual Machine or an EC2 AWS instance. For more info see [ReadMe](../provision/docs/terraform_readme.md)

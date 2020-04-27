@@ -5,3 +5,9 @@ vault.yml
 hosts
 tags
 *retry.yml
+forensic-devops
+coverage
+
+terraform.*
+.terraform
+.python-version
