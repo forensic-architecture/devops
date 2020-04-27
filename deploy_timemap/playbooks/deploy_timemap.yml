@@ -6,12 +6,17 @@
     - ../vars/vault.yml
   tasks:
     - import_tasks: ../tasks/prepare.yml
+      tags: [prepare]
     - import_tasks: ../tasks/datasheet.yml
+      tags: [datasheet]
     - import_tasks: ../tasks/timemap.yml
+      tags: [timemap]
     - import_tasks: ../tasks/nginx.yml
+      tags: [nginx]
 
     - name: restart nginx
       service: name=nginx state=restarted enabled=yes
+      tags: [nginx]
 
     # NOTE: no certbot automation, HTTPS still needs to be done manually as the
     # right options need to be selected. probably easy to fix.
