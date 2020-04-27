@@ -2,7 +2,7 @@
 
 Ansible playbooks, terraform templates, and other infrastructure-as-code developed for investigations at [Forensic Architecture](https://forensic-architecture.org)
 
-## Dependencies
+## Setup 
 
 The main dependencies at this time are Python, Ansible, and Terraform.
 
@@ -28,7 +28,9 @@ pip install ansible
 
 Installation instructions can be found in [provision/README.md](./provision/README.md).
 
-## provision 
+## Outline of IaC
+
+### provision 
 
 For more info see [provision/README.md](./provision/README.md).
 
