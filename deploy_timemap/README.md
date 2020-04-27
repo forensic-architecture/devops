@@ -2,20 +2,28 @@
 Ansible Playbook for Timemap Deployment
 </h1>
 
-An Ansible playbook for remote deployment of an instance of Timemap in conjunction with a dedicated instance of datasheet-server. Multiple Timemap/Datasheet instances may be deployed to the same server, differentiated by the `application_name` set in `vault.yml` (see configuration steps below).
+An Ansible playbook for remote deployment of an instance of Timemap in conjunction with a dedicated instance of datasheet-server. Multiple Timemap/Datasheet instances may be deployed to the same server, either hosting all sources on a single datasheet-server, or running different instances for each source. Datasheets and Timemaps are linked by their respective `name`s. 
 
 # Overview
 
-The playbook's tasks are broken down into four subsets, which are stored in separate files:
+The playbook's tasks are broken down into four successive stages:
 
-* `prepare.yml` installs the relevant packages on the remote server.
-* `datasheet.yml` configures and builds an instance Datasheet-Server on the remote server and launches it inside a docker container.
-* `timemap.yml` configures and builds an instance of Timemap on the host machine and copies the static files to the remote server.
-* `nginx.yml` configures the reverse proxy on the remote server
+* `prepare` - installs the relevant packages on the remote server.
+* `datasheet` - configures and builds an instance Datasheet-Server on the remote server, copies over any XLSX files, and launches the configured server inside a docker container.
+* `timemap` - configures and builds an instance of Timemap locally, and then copies the static files to the remote server.
+* `nginx.yml` configures the reverse proxy on the remote server to expose both
+    `timemap` and `datasheet` externally.
 
-The subtasks are called in sequence from the `_master.yml` playbook file.
 
-N.B. copies of the configuration files for both Timemap and Datasheet-Server in the `credentials` folder on the remote server.
+To run all stages successfully, use:
+```
+ansible-playbook playbooks/deploy_timemap.yml
+```
+
+To run a single stage, use the `--tag` flag:
+```
+ansible-playbook playbooks/deploy_timemap.yml --tag datasheet
+```
 
 # Configuration
 
@@ -23,7 +31,7 @@ First make sure [Ansible is installed](https://docs.ansible.com/ansible/latest/i
 
 Copy `example.env` to a new `.env` file in the same folder and provide your own host group (a server specified in the `inventories/hosts` file) and the location of the ssh key associated with this server.
 
-Copy `example.vault.yml` to a new `vault.yml` in the same folder. The vault file contains all Timemap/Datasheet specific configuration. See the [Timemap](https://github.com/forensic-architecture/timemap) and [Datasheet-Server](https://github.com/forensic-architecture/datasheet-server) documentation for more infomation.
+Copy `example.vault.yml` to a new `vault.yml` in the same folder. The vault file contains all Timemap/Datasheet specific configuration. See the [Timemap](https://github.com/forensic-architecture/timemap) and [Datasheet-Server](https://github.com/forensic-architecture/datasheet-server) documentation for more infomation. All files that end in 'vault.yml' are ignored from git, so you can keep configuration for multiple applications inside this folder locally, and symlink to 'vault.yml' when deploying one.
 
 Note: the domain name can also be an IP address for example:
 
