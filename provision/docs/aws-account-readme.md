@@ -33,9 +33,7 @@ You should now be able to follow the instructions in [terraform_readme.md](terra
 
 ## Storage Buckets - Syncing Content 
 
-
-
-access - public 
+With the aws CLI installed you can upload and sync files directly from your file system.
 
 ### Upload
 

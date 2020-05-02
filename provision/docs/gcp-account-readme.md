@@ -54,8 +54,7 @@ You should now be able to follow the instructions in [terraform_readme.md](terra
 
 ## Storage Buckets - Syncing Content 
 
-With the gsutil CLI installed you can upload and sync files directly from yor file system.
-
+With the gsutil CLI installed you can upload and sync files directly from your file system.
 
 ### Upload
 
