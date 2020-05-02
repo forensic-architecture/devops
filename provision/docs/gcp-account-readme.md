@@ -52,4 +52,25 @@ source .env
 
 You should now be able to follow the instructions in [terraform_readme.md](terraform_readme.md) to provision your infrastructure. 
 
+## Storage Buckets - Syncing Content 
 
+With the gsutil CLI installed you can upload and sync files directly from yor file system.
+
+
+### Upload
+
+To upload everything in the current directory run the following command: 
+
+```
+gsutil cp *.*  gs://forensic-architecture-bucket
+```
+
+### Sync
+
+To synchronise everything in the current directory and all subdirectories (upload and download anything already there) run the following command:
+
+```
+gsutil rsync . gs://forensic-architecture-bucket
+```
+
+For more information see: [https://cloud.google.com/storage/docs/gsutil/commands/rsync](https://cloud.google.com/storage/docs/gsutil/commands/rsync)

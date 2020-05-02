@@ -1,48 +1,38 @@
-variable "region" {
-  default = "us-east-1"
-}
-variable "bucket-name" {
-  default = "forensic-architecture-bucket"
-}
-variable "key_name" {
-  default = "forensic-architecture-admin"
-}
-variable "private_key_location" {
-}
-variable "instance_type" {
-  default = "t2.micro"
-}
-variable "ami" {
-  default = "ami-2757f631"
-}
-variable "instance_name" {
-  default = "forensic-architecture-vm"
-}
-variable "connection_user" {
-  default = "ubuntu"
-}
-
 provider "aws" {
   profile = "default"
   region  = var.region
 }
 
 resource "aws_s3_bucket" "forensic-architecture-bucket" {
-  # NOTE: S3 bucket names must be unique across _all_ AWS accounts, so
-  # this name must be changed before applying this example to avoid naming
-  # conflicts.
   bucket = var.bucket-name
-  acl    = "private"
   region = var.region
 }
 
+resource "aws_s3_bucket_policy" "forensic-architecture-bucket-policy" {
+  depends_on = [aws_s3_bucket.forensic-architecture-bucket]
+  bucket     = var.bucket-name
+  policy     = data.aws_iam_policy_document.policy-document.json
+}
+
+data "aws_iam_policy_document" "policy-document" {
+  statement {
+    sid    = "PublicRead"
+    effect = "Allow"
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+    actions   = ["s3:GetObject"]
+    resources = [format("arn:aws:s3:::%s/*", var.bucket-name)]
+  }
+}
 
 resource "aws_instance" "forensic-architecture-vm" {
   ami             = var.ami
   instance_type   = var.instance_type
   tags            = { Name = var.instance_name }
   key_name        = var.key_name
-  security_groups = [aws_security_group.forensic-architecture-web-node.name]
+  security_groups = [aws_security_group.forensic-architecture-security-group.name]
   depends_on      = [aws_s3_bucket.forensic-architecture-bucket]
   connection {
     type        = "ssh"
@@ -50,11 +40,14 @@ resource "aws_instance" "forensic-architecture-vm" {
     user        = var.connection_user
     private_key = file(var.private_key_location)
   }
+  provisioner "file" {
+    source      = "files/assets.sh"
+    destination = "/tmp/assets.sh"
+  }
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get -y update",
-      "sudo apt install -y docker.io"
-    ]
+      "chmod +x /tmp/assets.sh",
+    "/tmp/assets.sh"]
   }
 }
 
@@ -64,9 +57,9 @@ resource "aws_eip" "EC2-IP-address" {
   depends_on = [aws_instance.forensic-architecture-vm]
 }
 
-resource "aws_security_group" "forensic-architecture-web-node" {
-  name        = "forensic-architecture-web-node"
-  description = "Web Security Group"
+resource "aws_security_group" "forensic-architecture-security-group" {
+  name        = "forensic-architecture-security-group"
+  description = "Web Security Group for Forensic Architecture EC2"
   ingress {
     from_port   = 80
     to_port     = 80
@@ -85,8 +78,4 @@ resource "aws_security_group" "forensic-architecture-web-node" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-output "EC2-instance-ip" {
-  value = aws_eip.EC2-IP-address.public_ip
 }

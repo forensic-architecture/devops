@@ -67,3 +67,9 @@ When the scripts run they create an 'ephemeral' external IP address for the VM b
 You can rerun Terraform to change infrastructure at any time and you can also destroy all the Timemap related infrastructure at any time.
 
 Your infrastructure is now ready to be provisioned with Timemap and Datasheet as described in the deploy_timemap [README.md](../../deploy_timemap/README.md)
+
+## Storage Buckets
+
+With both AWS and GCP we have included provisioning of storage buckets so you can store the images, video and documents that Timemap relies on. Once you have provisioned the infrastructure you can upload these resources to the buckets and reference them in your spreadsheets. 
+
+You can upload files through the UI in the console or use the command line and CLI. For details of how to upload resources with the CLI see the [aws-account-readme.md](docs/aws-account-readme.md) or the [gcp-account-readme.md](docs/gcp-account-readme.md).
