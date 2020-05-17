@@ -1,9 +1,9 @@
 - hosts: 127.0.0.1
   vars_files:
-    - ./vars/main.yml
-    - ./vars/vault.yml
+    - ../vars/main.yml
+    - ../vars/vault.yml
   tasks:
   - name: Test jinja2template
-    template: src=templates/datasheet_sheets_config.js.j2 dest=test/datasheet_sheets_config.js
+    template: src=../templates/datasheet_sheets_config.js.j2 dest=../datasheet_sheets_config.js
   - name: Test jinja2template
-    template: src=templates/timemap_config.js.j2 dest=test/timemap_config.js
+    template: src=../templates/timemap_config.js.j2 dest=../timemap_config.js

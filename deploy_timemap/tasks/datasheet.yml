@@ -16,45 +16,73 @@
     state: directory
 
 - name: copy .env to credentials folder
-  template: src=../templates/datasheet-env.j2 dest=credentials/{{application_name}}.env
+  template: src=../templates/datasheet-env.j2 dest=credentials/datasheet.env
 
 - name: copy sheets_config.js to credentials folder
   template: >
     src=../templates/datasheet_sheets_config.js.j2
-    dest=credentials/{{ application_name }}_sheets_config.js
+    dest=credentials/sheets_config.js
+
+- name: create XLSX folder if it does not already exist
+  file:
+    path: xlsx
+    state: directory
+  when: datasheet.xlsx is defined
+
+- name: copy XLSX files to credentials folder
+  copy:
+    src: "{{ item.path }}"
+    dest: xlsx/{{ item.name }}.xlsx
+  loop: "{{ datasheet.xlsx }}"
+  when: datasheet.xlsx is defined
 
 - name: copy .env to datasheet folder
   copy:
     remote_src: true
-    src: credentials/{{ application_name }}.env
+    src: credentials/datasheet.env
     dest: datasheet-server/.env
 
 - name: copy sheets_config.js to datasheet folder
   copy:
     remote_src: true
-    src: credentials/{{ application_name }}_sheets_config.js
+    src: credentials/sheets_config.js
     dest: datasheet-server/src/sheets_config.js
 
 - name: remove container if exists
   docker_container:
-    name: "{{ application_name }}_datasheet"
+    name: datasheet
     state: absent
     force_kill: true
 
 - name: remove image if exists
   docker_image:
     state: absent
-    name: "{{ application_name }}_datasheet_prod"
+    name: datasheet_prod
     force: true
 
 - name: build docker image
   docker_image:
     path: datasheet-server
-    name: "{{ application_name }}_datasheet_prod"
+    name: datasheet_prod
 
-- name: run datasheet-server in container
+- name: interpolate volume strings for XLSX
+  set_fact:
+    xlsx_volumes: "{{ datasheet.xlsx | json_query('[].name') | map('regex_replace', '(^.*$)', ansible_env.HOME + '/xlsx/\\1.xlsx:/\\1.xlsx') | list }}"
+  when: datsheet.xlsx is defined
+
+- name: run datasheet-server in container with XLSX volumes
   docker_container:
-    name: "{{ application_name }}_datasheet"
-    image: "{{ application_name }}_datasheet_prod"
+    name: datasheet
+    image: datasheet_prod
+    volumes: "{{ xlsx_volumes | list }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
+  when: datasheet.xlsx is defined
+
+- name: run datasheet-server in container (w/o volumes)
+  docker_container:
+    name: datasheet
+    image: datasheet_prod
+    ports:
+      - "0.0.0.0:{{ datasheet.port }}:8080"
+  when: datasheet.xlsx is not defined

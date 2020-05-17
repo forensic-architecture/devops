@@ -1,19 +1,23 @@
 domain_name: example.com
-application_name: example
-static_files_folder: /var/www/html
 use_https: false
+static_files_folder: /var/www/html
+
 datasheet:
   port: 8080
   sheet_id: 1SJ4D30c5s1lrMKU3v3cfhNZv9vdKp6_sPJQ0s2hw6R0
-timemap:
-  features:
-    USE_COVER: false
-    USE_TAGS: false
-    USE_SEARCH: false
-    USE_SITES: false
-    USE_SOURCES: false
-    CATEGORIES_AS_TAGS: true
-    NARRATIVE_STEP_STYLES: false
 
-  # NB: any custom values in the redux store can be specified here
-  # store:
+timemaps:
+  - name: example
+    display_name: Example Timemap
+    features:
+      USE_COVER: false
+      USE_TAGS: false
+      USE_SEARCH: false
+      USE_SITES: false
+      USE_SOURCES: false
+      USE_NARRATIVES: false
+      CATEGORIES_AS_TAGS: true
+      NARRATIVE_STEP_STYLES: false
+
+    # NB: any custom values in the redux store can be specified here
+    # store:

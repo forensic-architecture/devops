@@ -20,21 +20,17 @@
 - name: add line in nginx config for server reverse proxy
   lineinfile:
     dest: /etc/nginx/sites-available/default
-    line: "\tlocation /{{ application_name }}-server {rewrite /{{ application_name }}-server/(.*) /$1 break;proxy_pass http://127.0.0.1:{{ datasheet.port }};}"
+    line: "\tlocation /{{ timemap.name }}-server {rewrite /{{ timemap.name }}-server/(.*) /$1 break;proxy_pass http://127.0.0.1:{{ datasheet.port }};}"
     insertafter: 'server_name {{ domain_name }} www.{{ domain_name }};'
     state: present
     create: yes
 
-- name: add line in nginx config for timemap alias for {{ application_name }} with domain name:{{ domain_name }} 
+- name: add line in nginx config for timemap alias for {{ timemap.name }} with domain name:{{ domain_name }}
   lineinfile:
     dest: /etc/nginx/sites-available/default
-    line: "\tlocation /{{ application_name }} {root /var/www/html;}"
+    line: "\tlocation /{{ timemap.name }} {root /var/www/html;}"
     insertafter: 'server_name {{ domain_name }} www.{{ domain_name }};'
     state: present
     create: yes
 
-- name: enable config
-  file: >
-    dest=/etc/nginx/sites-enabled/default
-    src=/etc/nginx/sites-available/default
-    state=link
+

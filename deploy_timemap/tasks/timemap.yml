@@ -1,38 +1,31 @@
-- name: ansible host - clean timemap repo state
-  local_action:
-    module: file
-    state: absent
-    path: timemap
-
 - name: create credentials folder if it does not already exist
   file:
     path: credentials
     state: directory
 
-- name: ansible host - checkout timemap repo
+- name: ansible host - clean config.js
   local_action:
-    module: git
-    repo: "{{ lookup('env', 'TIMEMAP_GIT_REPOSITORY') or 'https://github.com/forensic-architecture/timemap' }}"
-    dest: timemap
-    version: "{{ lookup('env', 'TIMEMAP_GIT_BRANCH') or 'develop' }}"
+    module: file
+    state: absent
+    path: timemap/config.js
 
-- name: copy config.js to timemap
+- name: ansible host - clean index.html
+  local_action:
+    module: file
+    state: absent
+    path: timemap/index.html
+
+- name: ansible host - copy config.js file
   local_action:
     module: template
     src: ../templates/timemap_config.js.j2
     dest: timemap/config.js
 
-- name: copy index.html to timemap
+- name: ansible host - copy index.html file
   local_action:
     module: template
     src: ../templates/index.html.j2
     dest: timemap/index.html
-
-- name: install packages on ansible host
-  local_action:
-    module: yarn
-    path: timemap
-    state: latest
 
 - name: ansible host - build app
   local_action:
@@ -45,7 +38,7 @@
     state: absent
     # Uncomment the next line and comment the one after if you are NOT using
     # multiple timemap instances on the same host.
-    path: '{{ static_files_folder }}/{{ application_name }}'
+    path: '{{ static_files_folder }}/{{ timemap.name }}'
     # path: '{{ static_files_folder }}'
 
 - name: copy files from timemap build to server's static files folder
@@ -53,16 +46,12 @@
     src: timemap/build/
     # Uncomment the next line and comment the one after if you are NOT using
     # multiple timemap instances on the same host.
-    dest: '{{ static_files_folder }}/{{ application_name }}'
+    dest: '{{ static_files_folder }}/{{ timemap.name }}'
     # dest: '{{ static_files_folder }}'
 
 - name: copy config.js to credentials folder
   copy:
     src: timemap/config.js
-    dest: credentials/{{ application_name }}_config.js
+    dest: credentials/{{ timemap.name }}_config.js
 
-- name: ansible host - remove timemap repo
-  local_action:
-    module: file
-    state: absent
-    path: timemap
+
