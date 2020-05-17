@@ -7,18 +7,64 @@
   tasks:
     - import_tasks: ../tasks/prepare.yml
       tags: [prepare]
+
     - import_tasks: ../tasks/datasheet.yml
       tags: [datasheet]
-    - import_tasks: ../tasks/timemap.yml
+
+    - name: ansible host - clean timemap repo state
+      local_action:
+        module: file
+        state: absent
+        path: timemap
       tags: [timemap]
-    - import_tasks: ../tasks/nginx.yml
+
+    - name: ansible host - checkout timemap repo
+      local_action:
+        module: git
+        repo: "{{ lookup('env', 'TIMEMAP_GIT_REPOSITORY') or 'https://github.com/forensic-architecture/timemap' }}"
+        dest: timemap
+        version: "{{ lookup('env', 'TIMEMAP_GIT_BRANCH') or 'develop' }}"
+      tags: [timemap]
+
+    - name: ansible host - yarn install
+      local_action:
+        module: yarn
+        path: timemap
+        state: latest
+      tags: [timemap]
+
+    - include_tasks:
+        file: ../tasks/timemap.yml
+        apply:
+          tags: [timemap]
+      tags: [always]
+      loop: "{{ timemaps }}"
+      loop_control:
+        loop_var: timemap
+
+    - name: ansible host - remove timemap repo
+      local_action:
+        module: file
+        state: absent
+        path: timemap
+      tags: [timemap]
+
+    - include_tasks:
+        file: ../tasks/nginx.yml
+        apply:
+          tags: [nginx]
+      loop: "{{ timemaps }}"
+      loop_control:
+        loop_var: timemap
+      tags: [always]
+
+    - name: enable config
+      file: >
+        dest=/etc/nginx/sites-enabled/default
+        src=/etc/nginx/sites-available/default
+        state=link
       tags: [nginx]
 
     - name: restart nginx
       service: name=nginx state=restarted enabled=yes
       tags: [nginx]
-
-    # NOTE: no certbot automation, HTTPS still needs to be done manually as the
-    # right options need to be selected. probably easy to fix.
-    # - name: run certbot
-    #   bash: sudo certbot --nginx -d {{ domain_name }}

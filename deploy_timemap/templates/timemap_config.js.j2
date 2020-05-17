@@ -33,7 +33,8 @@ module.exports = {
         rangeLimits: [
           new Date("{{ timemap.store.app.timeline.rangeLimits[0] }}"),
           new Date("{{ timemap.store.app.timeline.rangeLimits[1] }}")
-        ]
+        ],
+        dimensions: {{ (timemap.store.app.timeline.dimensions | to_nice_json) if timemap.store.app.timeline.dimensions is defined else {}}}
       }
     },
     ui: {{ timemap.store.ui | to_nice_json }}

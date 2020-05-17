@@ -34,7 +34,7 @@ export default {
     name: '{{ sheet.name }}',
     id: '{{ sheet.id }}',
     tabs: {{ sheet.name }}Structure
-  }
+  },
   {% endfor %}
   {% endif %}
   ],
@@ -45,7 +45,7 @@ export default {
     name: '{{ sheet.name }}',
     path: '/{{ sheet.name }}.xlsx', /* passed from local->instance->docker volume */
     tabs: {{ sheet.name }}Structure
-  }
+  },
   {% endfor %}
   {% endif %}
   ]
