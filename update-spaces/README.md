@@ -7,8 +7,8 @@ template. The ID and secret keys are available from your DO portal.
 
 ### upload.yml 
 
-Uploads a folder from your local to a DO space. Configure the `bucket_name` and
-`asset_name` inside upload.yml, and then run the following commands:
+Uploads a folder from your local to a DO space. Configure the variables
+in .env, and then run the following commands:
 ```
 source .env
 ansible-playbook upload.yml
@@ -16,9 +16,7 @@ ansible-playbook upload.yml
 ### publicise.yml
 
 Makes all files in a folder in a space publicly accessible. (A requirement if
-your assets are being used in websites, for example.) Configure the
-`bucket_name` and `asset_name` inside upload.yml, and then run the following
-commands:
+your assets are being used in websites, for example.)
 
 ```
 source .env
