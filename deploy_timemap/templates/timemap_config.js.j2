@@ -8,15 +8,12 @@ module.exports = {
   NARRATIVE_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.narratives is defined else '' }}export_narratives/rows',
   TAGS_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.tags is defined else '' }}export_tags/tree',
   SITES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.sites is defined else '' }}export_sites/rows',
-  INCOMING_DATETIME_FORMAT: '{{ timemap.datetime_format if timemap.datetime_format is defined else '%m/%d/%YT%H:%M'}}',
+  DATE_FMT: '{{ timemap.date_fmt if timemap.date_fmt is defined else 'MM/DD/YYYY'}}',
+  TIME_FMT: '{{ timemap.time_fmt if timemap.time_fmt is defined else 'HH:mm'}}',
 {% if timemap.mapbox_token is defined %}
   MAPBOX_TOKEN: '{{ timemap.mapbox_token }}',
 {% endif %}
-  features: {
-{% for key, value in timemap.features.items() %}
-    {{key}}: {{ 'true' if value else 'false' }},
-{% endfor %}
-  },
+
   store: {
     app: {
 {% if 'app' in timemap.store and 'cover' in timemap.store.app %}
@@ -37,6 +34,11 @@ module.exports = {
         dimensions: {{ (timemap.store.app.timeline.dimensions | to_nice_json) if timemap.store.app.timeline.dimensions is defined else {}}}
       }
     },
-    ui: {{ timemap.store.ui | to_nice_json }}
+    ui: {{ timemap.store.ui | to_nice_json }},
+    features: {
+    {% for key, value in timemap.features.items() %}
+      {{key}}: {{ ('true' if value else 'false') if value is boolean else value }},
+    {% endfor %}
+    },
   }
 }
