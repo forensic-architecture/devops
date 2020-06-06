@@ -1,0 +1,22 @@
+- name: update apt {{ letsencrypt_email }}
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install apt packages
+  apt:
+    name: ['software-properties-common']
+    state: present
+    update_cache: yes
+
+- name: install repository 
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    state: present
+
+- name: Install certbot
+  package:
+    name: ['certbot','python-certbot-nginx']
+    state: present
+
