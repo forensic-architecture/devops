@@ -6,9 +6,13 @@
 
 - name: install apt packages
   apt:
-    name: ['curl', 'nginx', 'git', 'python3-pip']
+    name: ['curl', 'nginx', 'git', 'python3-pip', 'software-properties-common']
     state: present
     update_cache: yes
+    
+- apt_repository:
+    repo: deb http://archive.canonical.com/ubuntu hardy partner
+    state: present
 
 - name: install docker
   import_role:
