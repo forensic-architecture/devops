@@ -4,7 +4,7 @@
   vars:
     domain_name: "the-moral-drift.com"
     letsencrypt_email: "{{ lookup('env', 'LETSENCRYPT_EMAIL') }}"
-    certbot_nginx_cert_name: "moraldrift"
+    certbot_nginx_cert_name: "the-moral-drift.com"
     letsencrypt_staging: no
 
   vars_files:
