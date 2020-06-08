@@ -8,7 +8,7 @@ const {{ sheet.name }}Structure = {
   {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.narratives is defined else '' }}export_narratives: BP.rows,
   {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sources is defined else '' }}export_sources: BP.deepids,
   {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sites is defined else '' }}export_sites: BP.rows,
-  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.tags is defined else '' }}export_tags: BP.tree,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.filters is defined else '' }}export_filters: BP.tree,
 }
 {% endfor %}
 {% endif %}
@@ -21,7 +21,7 @@ const {{ sheet.name }}Structure = {
   {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.narratives is defined else '' }}export_narratives: BP.rows,
   {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sources is defined else '' }}export_sources: BP.deepids,
   {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.sites is defined else '' }}export_sites: BP.rows,
-  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.tags is defined else '' }}export_tags: BP.tree,
+  {{ sheet.name +'_' if sheet.prefix_sheet_tabs is defined and sheet.prefix_sheet_tabs.filters is defined else '' }}export_filters: BP.tree,
 }
 {% endfor %}
 {% endif %}

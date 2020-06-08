@@ -2,11 +2,11 @@ module.exports = {
   title: '{{ timemap.name }}',
   display_title: '{{ timemap.display_name }}',
   SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{ timemap.name }}-server',
-  EVENT_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.events is defined else '' }}export_events/deeprows',
-  CATEGORY_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.categories is defined else '' }}export_categories/rows',
+  EVENTS_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.events is defined else '' }}export_events/deeprows',
+  CATEGORIES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.categories is defined else '' }}export_categories/rows',
   SOURCES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.sources is defined else '' }}export_sources/deepids',
-  NARRATIVE_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.narratives is defined else '' }}export_narratives/rows',
-  TAGS_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.tags is defined else '' }}export_tags/tree',
+  NARRATIVES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.narratives is defined else '' }}export_narratives/rows',
+  FILTERS_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.filters is defined else '' }}export_filters/tree',
   SITES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.sites is defined else '' }}export_sites/rows',
   DATE_FMT: '{{ timemap.date_fmt if timemap.date_fmt is defined else 'MM/DD/YYYY'}}',
   TIME_FMT: '{{ timemap.time_fmt if timemap.time_fmt is defined else 'HH:mm'}}',
@@ -23,6 +23,7 @@ module.exports = {
       map: {{ timemap.store.app.map | to_nice_json }},
 {% endif %}
       timeline: {
+        zoomLevels: {{ timemap.store.app.timeline.zoomLevels if timemap.store.app.timeline.zoomLevels is defined else [] }},
         range: [
           new Date("{{ timemap.store.app.timeline.range[0] }}"),
           new Date("{{ timemap.store.app.timeline.range[1] }}")
@@ -32,11 +33,12 @@ module.exports = {
           new Date("{{ timemap.store.app.timeline.rangeLimits[1] }}")
         ],
         dimensions: {{ (timemap.store.app.timeline.dimensions | to_nice_json) if timemap.store.app.timeline.dimensions is defined else {}}}
+
       }
     },
     ui: {{ timemap.store.ui | to_nice_json }},
     features: {
-    {% for key, value in timemap.features.items() %}
+    {% for key, value in timemap.store.features.items() %}
       {{key}}: {{ ('true' if value else 'false') if value is boolean else value }},
     {% endfor %}
     },
