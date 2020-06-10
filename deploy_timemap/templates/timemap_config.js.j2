@@ -17,10 +17,10 @@ module.exports = {
   store: {
     app: {
 {% if 'app' in timemap.store and 'cover' in timemap.store.app %}
-      cover: {{ timemap.store.app.cover | to_nice_json }},
+      cover: {{ timemap.store.app.cover }},
 {% endif %}
 {% if 'app' in timemap.store and 'map' in timemap.store.app %}
-      map: {{ timemap.store.app.map | to_nice_json }},
+      map: {{ timemap.store.app.map  }},
 {% endif %}
       timeline: {
         zoomLevels: {{ timemap.store.app.timeline.zoomLevels if timemap.store.app.timeline.zoomLevels is defined else [] }},
@@ -32,11 +32,10 @@ module.exports = {
           new Date("{{ timemap.store.app.timeline.rangeLimits[0] }}"),
           new Date("{{ timemap.store.app.timeline.rangeLimits[1] }}")
         ],
-        dimensions: {{ (timemap.store.app.timeline.dimensions | to_nice_json) if timemap.store.app.timeline.dimensions is defined else {}}}
-
+        dimensions: {{ (timemap.store.app.timeline.dimensions ) if timemap.store.app.timeline.dimensions is defined else {}}}
       }
     },
-    ui: {{ timemap.store.ui | to_nice_json }},
+    ui: {{ timemap.store.ui }},
     features: {
     {% for key, value in timemap.store.features.items() %}
       {{key}}: {{ ('true' if value else 'false') if value is boolean else value }},
