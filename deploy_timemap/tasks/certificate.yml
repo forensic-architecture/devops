@@ -26,3 +26,30 @@
   when: letsencrypt_cert.stat.exists and certbot_force_update is defined
   notify: reload nginx
 
+
+
+- name: add a marker for certbot
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: "\t# enter certbot block below"
+    insertafter: 'location /{{ timemap.name }} {root /var/www/html;}'
+    state: present
+    create: yes
+
+- name: Insert/Update HTML surrounded by custom markers after <body> line
+  blockinfile:
+    path: /etc/nginx/sites-available/default
+    marker: "# enter certbot block below"
+    insertafter: "# enter certbot block below"
+    block: |    
+      listen 443 ssl; 
+      ssl_certificate /etc/letsencrypt/live/{{domain_name}}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{domain_name}}/privkey.pem;
+      include /etc/letsencrypt/options-ssl-nginx.conf;
+
+      # Redirect non-https traffic to https
+      if ($scheme != "https") {
+        return 301 https://$host$request_uri;
+      } 
+    state: present
+    create: yes
