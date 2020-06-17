@@ -4,7 +4,7 @@
     - ../vars/vault.yml
   tasks:
   - name: Test jinja2template
-    template: src=../templates/datasheet_sheets_config.js.j2 dest=../datasheet_sheets_config.js
+    template: src=../templates/datasheet_config.js.j2 dest=../datasheet_config.js
   - name: Test jinja2template
     template: src=../templates/timemap_config.js.j2 dest=../{{ timemap.name }}_config.js
     loop: "{{ timemaps }}"
