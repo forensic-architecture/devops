@@ -18,10 +18,10 @@
 - name: copy .env to credentials folder
   template: src=../templates/datasheet-env.j2 dest=credentials/datasheet.env
 
-- name: copy sheets_config.js to credentials folder
+- name: copy config.js to credentials folder
   template: >
-    src=../templates/datasheet_sheets_config.js.j2
-    dest=credentials/sheets_config.js
+    src=../templates/datasheet_config.js.j2
+    dest=credentials/datasheet_config.js
 
 - name: create XLSX folder if it does not already exist
   file:
@@ -45,8 +45,8 @@
 - name: copy sheets_config.js to datasheet folder
   copy:
     remote_src: true
-    src: credentials/sheets_config.js
-    dest: datasheet-server/src/sheets_config.js
+    src: credentials/datasheet_config.js
+    dest: datasheet-server/src/config.js
 
 - name: remove container if exists
   docker_container:
