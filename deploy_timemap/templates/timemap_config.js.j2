@@ -35,7 +35,7 @@ module.exports = {
         dimensions: {{ (timemap.store.app.timeline.dimensions ) if timemap.store.app.timeline.dimensions is defined else {}}}
       }
     },
-    ui: {{ timemap.store.ui }},
+    ui: {{ timemap.store.ui if timemap.store.ui is defined else {} }},
     features: {
     {% for key, value in timemap.store.features.items() %}
       {{key}}: {{ ('true' if value else 'false') if value is boolean else value }},
