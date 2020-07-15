@@ -18,10 +18,10 @@
 - name: copy .env to credentials folder
   template: src=../templates/datasheet-env.j2 dest=credentials/datasheet.env
 
-- name: copy sheets_config.js to credentials folder
+- name: copy config.js to credentials folder
   template: >
-    src=../templates/datasheet_sheets_config.js.j2
-    dest=credentials/sheets_config.js
+    src=../templates/datasheet_config.js.j2
+    dest=credentials/datasheet_config.js
 
 - name: create XLSX folder if it does not already exist
   file:
@@ -45,8 +45,8 @@
 - name: copy sheets_config.js to datasheet folder
   copy:
     remote_src: true
-    src: credentials/sheets_config.js
-    dest: datasheet-server/src/sheets_config.js
+    src: credentials/datasheet_config.js
+    dest: datasheet-server/src/config.js
 
 - name: remove container if exists
   docker_container:
@@ -54,16 +54,21 @@
     state: absent
     force_kill: true
 
+- name: set datasheet Name
+  set_fact:
+    ds_image: "{{ timemaps | map(attribute='name') | join('_') + '__datasheet' }}"
+    ds_container: "{{ timemaps | map(attribute='name') | join('_') }}"
+
 - name: remove image if exists
   docker_image:
     state: absent
-    name: datasheet_prod
+    name: "{{ ds_image }}"
     force: true
 
 - name: build docker image
   docker_image:
     path: datasheet-server
-    name: datasheet_prod
+    name: "{{ ds_image }}"
 
 - name: interpolate volume strings for XLSX
   set_fact:
@@ -72,8 +77,8 @@
 
 - name: run datasheet-server in container with XLSX volumes
   docker_container:
-    name: datasheet
-    image: datasheet_prod
+    name: "{{ ds_container }}"
+    image: "{{ ds_image }}"
     volumes: "{{ xlsx_volumes | list }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
@@ -81,8 +86,8 @@
 
 - name: run datasheet-server in container (w/o volumes)
   docker_container:
-    name: datasheet
-    image: datasheet_prod
+    name: "{{ ds_container }}"
+    image: "{{ ds_image }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
   when: datasheet.xlsx is not defined
