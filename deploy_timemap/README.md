@@ -74,6 +74,15 @@ ansible-playbook playbooks/deploy_timemap.yml
 
 ```
 
+## HTTPS and Certificates
+
+To install a certificate on the server and enable HTTPS run:
+
+```
+ansible-playbook playbooks/addHttpsCertificate.yml
+
+```
+
 ## Time Map Cloud Infrastructure Provisioning
 
 If you don't have a server to install Timemap on then you can set one up in the Cloud on a Google Cloud Platform Virtual Machine or an EC2 AWS instance. For more info see [ReadMe](../provision/docs/terraform_readme.md)
