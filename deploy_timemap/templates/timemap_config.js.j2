@@ -28,10 +28,12 @@ module.exports = {
           new Date("{{ timemap.store.app.timeline.range[0] }}"),
           new Date("{{ timemap.store.app.timeline.range[1] }}")
         ],
+{% if timemap.store.app.timeline.rangeLimits is defined %}
         rangeLimits: [
           new Date("{{ timemap.store.app.timeline.rangeLimits[0] }}"),
           new Date("{{ timemap.store.app.timeline.rangeLimits[1] }}")
         ],
+{% endif %}
         dimensions: {{ (timemap.store.app.timeline.dimensions ) if timemap.store.app.timeline.dimensions is defined else {}}}
       }
     },
