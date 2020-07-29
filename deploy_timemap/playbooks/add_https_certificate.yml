@@ -1,0 +1,19 @@
+- hosts: "{{ lookup('env', 'ANSIBLE_HOST_GROUP') or 'localhost' }}"
+  become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'False' }}"
+  user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
+  vars:
+    domain_name: "{{ domain_name }}"
+    letsencrypt_email: "{{ lookup('env', 'LETSENCRYPT_EMAIL') }}"
+    certbot_nginx_cert_name: "{{ domain_name }}"
+    letsencrypt_staging: no
+
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/vault.yml
+  tasks:
+    - name: Install certbot for "{{ domain_name }}"  
+      import_tasks: ../tasks/certbot.yml
+      tags: [prepare]
+    - name: Install a certificate   
+      import_tasks: ../tasks/certificate.yml
+      tags: [certificate]
