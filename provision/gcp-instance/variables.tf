@@ -9,12 +9,18 @@ variable "image" {
   default     = "projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts"
 }
 variable "instance_name" {
-  default = "forensic-architecture-vm"
+  default = "timemap-vm"
 }
 variable "bucket_name" {
-  default = "forensic-architecture-bucket"
+  default = "timemap-bucket"
 }
 variable "project_name" {
   description = "The name of the GCP Project"
   #  declared in terraform.tfvars 
 }
+variable "cors_origin" {
+  description = "Specifies the URLs that can access the bucket. The default is open access."
+  default     = "*"
+}
+
+

@@ -2,10 +2,10 @@ variable "region" {
   default = "us-east-1"
 }
 variable "bucket-name" {
-  default = "forensic-architecture-bucket"
+  default = "timemap-bucket"
 }
 variable "key_name" {
-  default = "forensic-architecture-admin"
+  default = "timemap-admin"
 }
 variable "private_key_location" {
   description = "The location of your key on your file system"
@@ -19,9 +19,13 @@ variable "ami" {
 }
 variable "instance_name" {
   description = "The EC2 name"
-  default     = "forensic-architecture-vm"
+  default     = "timemap-vm"
 }
 variable "connection_user" {
   description = "The name of the ssh user used to connect to the EC2 instance"
   default     = "ubuntu"
+}
+variable "cors_allowed_origins" {
+  description = "Specifies the URLs that can access the bucket. The default is open access."
+  default     = "*"
 }
