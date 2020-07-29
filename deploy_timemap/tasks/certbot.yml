@@ -1,4 +1,4 @@
-- name: update apt {{ letsencrypt_email }}
+- name: update apt
   apt:
     upgrade: yes
     update_cache: yes

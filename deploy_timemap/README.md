@@ -79,7 +79,7 @@ ansible-playbook playbooks/deploy_timemap.yml
 To install a certificate on the server and enable HTTPS run:
 
 ```
-ansible-playbook playbooks/addHttpsCertificate.yml
+ansible-playbook playbooks/add_https_certificate.yml
 
 ```
 
