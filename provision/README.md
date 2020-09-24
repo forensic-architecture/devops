@@ -21,8 +21,8 @@ Full instructions here: [Installing Terraform](https://learn.hashicorp.com/terra
 ## Common Terraform Workflow
 
 For both GCP and AWS there is a common workflow but prior to running that you will need to follow the instructions for setting up an account and associated security credentials. Depending on your choice of platform follow the instructions for:
-AWS [aws-account-readme.md](aws-account-readme.md) and then switch to the `aws-instance` directory.
-GCP [gcp-account-readme.md](gcp-account-readme.md) and then switch to the `gcp-instance` directory.
+AWS [aws-account-readme.md](docs/aws-account-readme.md) and then switch to the `aws-instance` directory.
+GCP [gcp-account-readme.md](docs/gcp-account-readme.md) and then switch to the `gcp-instance` directory.
 
 ## Initialise the project
 
@@ -67,3 +67,9 @@ When the scripts run they create an 'ephemeral' external IP address for the VM b
 You can rerun Terraform to change infrastructure at any time and you can also destroy all the Timemap related infrastructure at any time.
 
 Your infrastructure is now ready to be provisioned with Timemap and Datasheet as described in the deploy_timemap [README.md](../../deploy_timemap/README.md)
+
+## Storage Buckets
+
+With both AWS and GCP we have included provisioning of storage buckets so you can store the images, video and documents that Timemap relies on. Once you have provisioned the infrastructure you can upload these resources to the buckets and reference the appropriate URLs in your datasheet-server spreadsheets.
+
+You can upload files through the UI in the console or use the command line and CLI. For details of how to upload resources with the CLI see the [aws-account-readme.md](docs/aws-account-readme.md) or the [gcp-account-readme.md](docs/gcp-account-readme.md).
