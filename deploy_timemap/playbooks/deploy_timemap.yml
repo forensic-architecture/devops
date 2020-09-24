@@ -1,15 +1,22 @@
 - hosts: "{{ lookup('env', 'ANSIBLE_HOST_GROUP') or 'localhost' }}"
-  become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'False' }}"
-  user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
+  # become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'no' }}"
+  # user: ebrahem
+  user: ebrahem
+  # become: no
+  # become_user: root
+  # become_method: sudo
+  # user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
   vars_files:
     - ../vars/main.yml
     - ../vars/vault.yml
   tasks:
     - import_tasks: ../tasks/prepare.yml
       tags: [prepare]
+      become: yes
 
     - import_tasks: ../tasks/datasheet.yml
       tags: [datasheet]
+      become: yes
 
     - name: ansible host - clean timemap repo state
       local_action:
@@ -17,6 +24,7 @@
         state: absent
         path: timemap
       tags: [timemap]
+      become: no
 
     - name: ansible host - checkout timemap repo
       local_action:
@@ -25,6 +33,7 @@
         dest: timemap
         version: "{{ lookup('env', 'TIMEMAP_GIT_BRANCH') or 'develop' }}"
       tags: [timemap]
+      become: no
 
     - name: ansible host - yarn install
       local_action:
@@ -32,6 +41,7 @@
         path: timemap
         state: latest
       tags: [timemap]
+      become: no
 
     - include_tasks:
         file: ../tasks/timemap.yml
@@ -48,11 +58,13 @@
         state: absent
         path: timemap
       tags: [timemap]
+      become: no
 
     - include_tasks:
         file: ../tasks/nginx.yml
         apply:
           tags: [nginx]
+          become: yes
       loop: "{{ timemaps }}"
       loop_control:
         loop_var: timemap
