@@ -11,8 +11,8 @@
     path: timemap/config.js
   become: no
 
-- name: put config in timemap
-  local_action: shell cp ../{{ timemap.config }} timemap/config.js
+- name: put config in timemap, replacing SERVER_ROOT with production URL
+  local_action: "shell cat ../{{ timemap.config }} | gawk \"/SERVER_ROOT/ { print \\\"SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{timemap.name}}-server',\\\"; next; } /.*/ { print $1 }\" > timemap/config.js"
   become: no
 
 - name: ansible host - clean index.html
