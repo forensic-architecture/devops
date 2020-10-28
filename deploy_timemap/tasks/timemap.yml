@@ -11,18 +11,15 @@
     path: timemap/config.js
   become: no
 
+- name: put config in timemap
+  local_action: shell cp ../{{ timemap.config }} timemap/config.js
+  become: no
+
 - name: ansible host - clean index.html
   local_action:
     module: file
     state: absent
     path: timemap/index.html
-  become: no
-
-- name: ansible host - copy config.js file
-  local_action:
-    module: template
-    src: ../templates/timemap_config.js.j2
-    dest: timemap/config.js
   become: no
 
 - name: ansible host - copy index.html file

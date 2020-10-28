@@ -1,5 +1,5 @@
 - hosts: "{{ lookup('env', 'ANSIBLE_HOST_GROUP') or 'localhost' }}"
-  user: "{{ lookup('env', 'ANSIBLE_SSH_USER') or 'localhost' }}"
+  user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'localhost' }}"
   vars_files:
     - ../vars/main.yml
     - ../vars/vault.yml
