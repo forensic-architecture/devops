@@ -1,11 +1,5 @@
 - hosts: "{{ lookup('env', 'ANSIBLE_HOST_GROUP') or 'localhost' }}"
-  # become: "{{ lookup('env', 'ANSIBLE_BECOME') or 'no' }}"
-  # user: ebrahem
-  user: ebrahem
-  # become: no
-  # become_user: root
-  # become_method: sudo
-  # user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') or 'root' }}"
+  user: "{{ lookup('env', 'ANSIBLE_SSH_USER') or 'localhost' }}"
   vars_files:
     - ../vars/main.yml
     - ../vars/vault.yml

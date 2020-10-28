@@ -6,7 +6,6 @@ module.exports = {
   CATEGORIES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.categories is defined else '' }}export_categories/rows',
   SOURCES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.sources is defined else '' }}export_sources/deepids',
   ASSOCIATIONS_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.associations is defined else '' }}export_associations/deeprows',
-  SITES_EXT: '/api/{{ timemap.name }}/{{ timemap.name+'_' if timemap.prefix_sheet_tabs is defined and timemap.prefix_sheet_tabs.sites is defined else '' }}export_sites/rows',
   DATE_FMT: '{{ timemap.date_fmt if timemap.date_fmt is defined else 'MM/DD/YYYY'}}',
   TIME_FMT: '{{ timemap.time_fmt if timemap.time_fmt is defined else 'HH:mm'}}',
 {% if timemap.mapbox_token is defined %}
@@ -15,24 +14,24 @@ module.exports = {
 
   store: {
     app: {
-{% if 'app' in timemap.store and 'cover' in timemap.store.app %}
+      {% if 'app' in timemap.store and 'cover' in timemap.store.app %}
       cover: {{ timemap.store.app.cover }},
-{% endif %}
-{% if 'app' in timemap.store and 'map' in timemap.store.app %}
+      {% endif %}
+      {% if 'app' in timemap.store and 'map' in timemap.store.app %}
       map: {{ timemap.store.app.map  }},
-{% endif %}
+      {% endif %}
       timeline: {
         zoomLevels: {{ timemap.store.app.timeline.zoomLevels if timemap.store.app.timeline.zoomLevels is defined else [] }},
         range: [
           new Date("{{ timemap.store.app.timeline.range[0] }}"),
           new Date("{{ timemap.store.app.timeline.range[1] }}")
         ],
-{% if timemap.store.app.timeline.rangeLimits is defined %}
+        {% if timemap.store.app.timeline.rangeLimits is defined %}
         rangeLimits: [
           new Date("{{ timemap.store.app.timeline.rangeLimits[0] }}"),
           new Date("{{ timemap.store.app.timeline.rangeLimits[1] }}")
         ],
-{% endif %}
+        {% endif %}
         dimensions: {{ (timemap.store.app.timeline.dimensions ) if timemap.store.app.timeline.dimensions is defined else {}}}
       }
     },
