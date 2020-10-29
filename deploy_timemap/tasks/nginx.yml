@@ -33,4 +33,12 @@
     state: present
     create: yes
 
+- name: add a marker for certbot block
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    line: "\t# enter certbot block below"
+    insertafter: 'location /{{ timemap.name }} {root /var/www/html;}'
+    state: present
+    create: yes
+
 

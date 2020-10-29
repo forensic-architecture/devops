@@ -11,3 +11,5 @@ coverage
 terraform.*
 .terraform
 .python-version
+/deploy_timemap/forensic-devops/
+.vscode
