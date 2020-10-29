@@ -28,6 +28,13 @@
         version: "{{ lookup('env', 'TIMEMAP_GIT_BRANCH') or 'develop' }}"
       tags: [timemap]
       become: no
+      when: "{{ lookup('env', 'ANSIBLE_LOCAL_TIMEMAP') is not defined }}"
+
+    - name: ansible host - copy timemap repo from local install
+      local_action: "shell cp -r {{ lookup('env', 'ANSIBLE_LOCAL_TIMEMAP') }} timemap"
+      tags: [timemap]
+      become: no
+      when: "{{ lookup('env', 'ANSIBLE_LOCAL_TIMEMAP') is defined }}"
 
     - name: ansible host - yarn install
       local_action:
