@@ -48,16 +48,16 @@
     src: credentials/datasheet_config.js
     dest: datasheet-server/src/config.js
 
-- name: remove container if exists
-  docker_container:
-    name: datasheet
-    state: absent
-    force_kill: true
-
 - name: set datasheet Name
   set_fact:
     ds_image: "{{ timemaps | map(attribute='name') | join('_') + '__datasheet' }}"
     ds_container: "{{ timemaps | map(attribute='name') | join('_') }}"
+
+- name: remove container if exists
+  docker_container:
+    name: "{{ ds_container }}"
+    state: absent
+    force_kill: true
 
 - name: remove image if exists
   docker_image:

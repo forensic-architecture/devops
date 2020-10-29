@@ -67,6 +67,11 @@ Then install the dependency Playbooks:
 ansible-galaxy install angstwad.docker_ubuntu
 ```
 
+You'll also need [gawk](https://www.gnu.org/software/gawk/):
+```
+sudo apt install gawk # 'brew install gawk' on mac
+```
+
 The playbook can then be run via the command
 
 ```

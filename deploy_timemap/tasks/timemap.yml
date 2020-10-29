@@ -2,36 +2,39 @@
   file:
     path: credentials
     state: directory
+  become: yes
 
 - name: ansible host - clean config.js
   local_action:
     module: file
     state: absent
     path: timemap/config.js
+  become: no
+
+- name: put config in timemap, replacing SERVER_ROOT with production URL
+  local_action: "shell cat ../{{ timemap.config }} | gawk \"/SERVER_ROOT/ { print \\\"SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{timemap.name}}-server',\\\"; next; } /.*/ { print $1 }\" > timemap/config.js"
+  become: no
 
 - name: ansible host - clean index.html
   local_action:
     module: file
     state: absent
     path: timemap/index.html
-
-- name: ansible host - copy config.js file
-  local_action:
-    module: template
-    src: ../templates/timemap_config.js.j2
-    dest: timemap/config.js
+  become: no
 
 - name: ansible host - copy index.html file
   local_action:
     module: template
     src: ../templates/index.html.j2
     dest: timemap/index.html
+  become: no
 
 - name: ansible host - build app
   local_action:
     module: shell
     _raw_params: yarn build
     chdir: timemap
+  become: no
 
 - name: server - remove previous frontend if exists
   file:
@@ -40,6 +43,7 @@
     # multiple timemap instances on the same host.
     path: '{{ static_files_folder }}/{{ timemap.name }}'
     # path: '{{ static_files_folder }}'
+  become: yes
 
 - name: copy files from timemap build to server's static files folder
   copy:
@@ -48,10 +52,12 @@
     # multiple timemap instances on the same host.
     dest: '{{ static_files_folder }}/{{ timemap.name }}'
     # dest: '{{ static_files_folder }}'
+  become: yes
 
 - name: copy config.js to credentials folder
   copy:
     src: timemap/config.js
     dest: credentials/{{ timemap.name }}_config.js
+  become: yes
 
 

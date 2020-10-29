@@ -30,3 +30,25 @@ The AWS CLI needs to be configured with security credentials so it can connect t
 Follow the instructions here: [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) and for the AWS Credentials pay special attention to the section 'To create access keys for an IAM user'.
 
 You should now be able to follow the instructions in [terraform_readme.md](terraform_readme.md) to provision your infrastructure. 
+
+## Storage Buckets - Syncing Content 
+
+With the aws CLI installed you can upload and sync files directly from your file system.
+
+### Upload
+
+To upload everything in the current directory run the following command: 
+
+```
+aws s3 cp your-directory-name s3://forensic-architecture-bucket --recursive
+```
+
+### Sync
+
+To synchronise everything in the current directory (upload and download anything already there) run the following command:
+
+```
+aws s3 sync . s3://forensic-architecture-bucket
+```
+
+For more information see: [https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html)
