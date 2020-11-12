@@ -23,18 +23,18 @@
     src=../templates/datasheet_config.js.j2
     dest=credentials/datasheet_config.js
 
-- name: create XLSX folder if it does not already exist
+- name: create local folder if it does not already exist
   file:
-    path: xlsx
+    path: local
     state: directory
-  when: datasheet.xlsx is defined
+  when: datasheet.local is defined
 
-- name: copy XLSX files to credentials folder
+- name: copy local to credentials folder
   copy:
     src: "{{ item.path }}"
-    dest: xlsx/{{ item.name }}.xlsx
-  loop: "{{ datasheet.xlsx }}"
-  when: datasheet.xlsx is defined
+    dest: local/{{ item.path | basename }}
+  loop: "{{ datasheet.local }}"
+  when: datasheet.local is defined
 
 - name: copy .env to datasheet folder
   copy:
@@ -70,19 +70,19 @@
     path: datasheet-server
     name: "{{ ds_image }}"
 
-- name: interpolate volume strings for XLSX
+- name: interpolate volume strings for local
   set_fact:
-    xlsx_volumes: "{{ datasheet.xlsx | json_query('[].name') | map('regex_replace', '(^.*$)', ansible_env.HOME + '/xlsx/\\1.xlsx:/\\1.xlsx') | list }}"
-  when: datsheet.xlsx is defined
+    local_volumes: "{{ datasheet.local | json_query('[].path') | map('basename') | map('regex_replace', '(^.*$)', ansible_env.HOME + '/local/\\1:/\\1') | list }}"
+  when: datsheet.local is defined
 
-- name: run datasheet-server in container with XLSX volumes
+- name: run datasheet-server in container with local volumes
   docker_container:
     name: "{{ ds_container }}"
     image: "{{ ds_image }}"
-    volumes: "{{ xlsx_volumes | list }}"
+    volumes: "{{ local_volumes | list }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
-  when: datasheet.xlsx is defined
+  when: datasheet.local is defined
 
 - name: run datasheet-server in container (w/o volumes)
   docker_container:
@@ -90,4 +90,4 @@
     image: "{{ ds_image }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:8080"
-  when: datasheet.xlsx is not defined
+  when: datasheet.local is not defined
