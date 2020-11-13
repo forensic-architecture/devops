@@ -15,19 +15,19 @@
   local_action: "shell cat ../{{ timemap.config }} | gawk \"/SERVER_ROOT/ { print \\\"SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{timemap.name}}-server',\\\"; next; } /.*/ { print $1 }\" > timemap/config.js"
   become: no
 
-- name: ansible host - clean index.html
-  local_action:
-    module: file
-    state: absent
-    path: timemap/index.html
-  become: no
-
-- name: ansible host - copy index.html file
-  local_action:
-    module: template
-    src: ../templates/index.html.j2
-    dest: timemap/index.html
-  become: no
+# - name: ansible host - clean index.html
+#   local_action:
+#     module: file
+#     state: absent
+#     path: timemap/index.html
+#   become: no
+#
+# - name: ansible host - copy index.html file
+#   local_action:
+#     module: template
+#     src: ../templates/index.html.j2
+#     dest: timemap/index.html
+#   become: no
 
 - name: ansible host - build app
   local_action:
@@ -36,22 +36,24 @@
     chdir: timemap
   become: no
 
+- name: set publish directory
+  set_fact: publish_dir={{ static_files_folder }}/{{ timemap.name }}
+  when: "{{ not lookup('env', 'TIMEMAP_PUBLISH_AT_ROOT') }}"
+
+- name: set publish directory
+  set_fact: publish_dir={{ static_files_folder }}
+  when: "{{ lookup('env', 'TIMEMAP_PUBLISH_AT_ROOT') }}"
+
 - name: server - remove previous frontend if exists
   file:
     state: absent
-    # Uncomment the next line and comment the one after if you are NOT using
-    # multiple timemap instances on the same host.
-    path: '{{ static_files_folder }}/{{ timemap.name }}'
-    # path: '{{ static_files_folder }}'
+    path: "{{ publish_dir }}"
   become: yes
 
 - name: copy files from timemap build to server's static files folder
   copy:
     src: timemap/build/
-    # Uncomment the next line and comment the one after if you are NOT using
-    # multiple timemap instances on the same host.
-    dest: '{{ static_files_folder }}/{{ timemap.name }}'
-    # dest: '{{ static_files_folder }}'
+    dest: "{{ publish_dir }}"
   become: yes
 
 - name: copy config.js to credentials folder

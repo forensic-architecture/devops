@@ -62,10 +62,11 @@ For more info see the [provision directory](../provision/docs/terraform_readme.m
 
 # Running 
 
-First install the dependency:
+First install the dependencies:
 ```
 ansible-galaxy install angstwad.docker_ubuntu
 sudo apt install gawk # or 'brew install gawk' on mac
+pip3 install jmespath
 ```
 
 Always run commands from inside this directory ('deploy_timemap'), sourcing the

@@ -72,8 +72,8 @@
 
 - name: interpolate volume strings for local
   set_fact:
-    local_volumes: "{{ datasheet.local | json_query('[].path') | map('basename') | map('regex_replace', '(^.*$)', ansible_env.HOME + '/local/\\1:/\\1') | list }}"
-  when: datsheet.local is defined
+    local_volumes: "{{ datasheet.local | json_query('[].path') | map('basename') | map('regex_replace', '(^.*$)', '/home/' + lookup('env', 'ANSIBLE_REMOTE_USER' ) + '/local/\\1:/\\1') | list }}"
+  when: datasheet.local is defined
 
 - name: run datasheet-server in container with local volumes
   docker_container:
