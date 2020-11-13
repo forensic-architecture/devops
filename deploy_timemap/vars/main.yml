@@ -10,5 +10,10 @@ datasheet:
   #   - name: mysheet
   #     id: xxxx
 
+timemaps:
+  - name: example
+    display_name: Example Timemap
+    config: ~/Desktop/timemap/example.config.js
+
 
 
