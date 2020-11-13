@@ -20,6 +20,10 @@
       tags: [timemap]
       become: no
 
+    - name: set fact for installation
+      set_fact: timemap_src="{{ lookup('env', 'TIMEMAP_LOCAL_REPOSITORY') }}"
+      tags: [timemap]
+
     - name: ansible host - checkout timemap repo
       local_action:
         module: git
@@ -28,13 +32,13 @@
         version: "{{ lookup('env', 'TIMEMAP_GIT_BRANCH') or 'develop' }}"
       tags: [timemap]
       become: no
-      when: "{{ lookup('env', 'ANSIBLE_LOCAL_TIMEMAP') is not defined }}"
+      when: not timemap_src
 
     - name: ansible host - copy timemap repo from local install
-      local_action: "shell cp -r {{ lookup('env', 'ANSIBLE_LOCAL_TIMEMAP') }} timemap"
+      local_action: "shell cp -r {{ timemap_src }} timemap"
       tags: [timemap]
       become: no
-      when: "{{ lookup('env', 'ANSIBLE_LOCAL_TIMEMAP') is defined }}"
+      when: timemap_src
 
     - name: ansible host - yarn install
       local_action:

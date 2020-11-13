@@ -9,4 +9,3 @@ sudo apt install -y certbot
 sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt-get -y update
 sudo apt install -y python-certbot-nginx
-    
