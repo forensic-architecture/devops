@@ -12,12 +12,12 @@ export default {
   {% endfor %}
   {% endif %}
   ],
-  xlsx: [
-  {% if datasheet.xlsx is defined %}
-  {% for sheet in datasheet.xlsx %}
+  local: [
+  {% if datasheet.local is defined %}
+  {% for sheet in datasheet.local %}
   {
     name: '{{ sheet.name }}',
-    path: '/{{ sheet.name }}.xlsx', /* passed from local->instance->docker volume */
+    path: '/{{ sheet.path | basename }}', /* passed from local->instance->docker volume */
     tabs: timemap.{{ 'default' if sheet.prefix_sheet_tabs is not defined else 'prefixedTabs('+sheet.prefix_sheet_tabs+')'}}
   },
   {% endfor %}
