@@ -8,7 +8,7 @@
   local_action:
     module: file
     state: absent
-    path: timemap/config.js
+    path: ../playbooks/timemap/config.js
   become: no
 
 - name: put config in timemap, replacing SERVER_ROOT with production URL
@@ -19,14 +19,14 @@
   local_action:
     module: file
     state: absent
-    path: timemap/index.html
+    path: ../playbooks/timemap/index.html
   become: no
 
 - name: ansible host - copy index.html file
   local_action:
     module: template
     src: ../templates/index.html.j2
-    dest: timemap/index.html
+    dest: ../playbooks/timemap/index.html
   become: no
 
 - name: ansible host - build app
