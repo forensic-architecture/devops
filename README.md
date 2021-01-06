@@ -42,7 +42,8 @@ configured [Datasheet Server](https://github.com/datasheet-server) backend, to
 a cloud instance. For more info see
 [deploy_timemap/README.md](./deploy_timemap/README.md)
 
-### update_spaces
-
-Ansible playbooks to manage Digital Ocean spaces. For more info see
-[update_spaces/README.md](./update_spaces/README.md).
+### Updating DO spaces
+We recommend using the
+[s3cmd](https://www.digitalocean.com/docs/spaces/resources/s3cmd/) tool to sync
+to spaces programmatically. A list of useful commands can be found
+[here](https://www.digitalocean.com/community/questions/how-to-manage-digitalocean-spaces-using-s3cmd).

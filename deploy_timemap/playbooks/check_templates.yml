@@ -1,0 +1,24 @@
+- hosts: 127.0.0.1
+  vars_files:
+    - ../vars/main.yml
+    - ../vars/vault.yml
+  tasks:
+  - name: setup...
+    local_action:
+      module: file
+      path: /tmp/configs
+      state: directory
+  - name: check datasheet config generates
+    template: src=../templates/datasheet_config.js.j2 dest=/tmp/configs/datasheet_config.js
+  - name: check timemap config paths
+    local_action: "shell cat {{ timemap.config }} | gawk \"/SERVER_ROOT/ { print \\\"SERVER_ROOT: 'http{{ 's' if use_https else '' }}://{{ domain_name }}/{{timemap.name}}-server',\\\"; next; } /.*/ { print $1 }\" > /tmp/configs/timemap_config.js"
+    loop: "{{ timemaps }}"
+    loop_control:
+      loop_var: timemap
+
+  - name: cleanup...
+    local_action:
+      module: file
+      path: /tmp/configs
+      state: absent
+
