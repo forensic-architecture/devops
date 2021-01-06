@@ -22,7 +22,7 @@
 - name: ansible host - build app
   local_action:
     module: shell
-    _raw_params: yarn build
+    _raw_params: CI=false yarn build
     chdir: timemap
   become: no
 
