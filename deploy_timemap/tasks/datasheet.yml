@@ -80,14 +80,18 @@
     name: "{{ ds_container }}"
     image: "{{ ds_image }}"
     volumes: "{{ local_volumes | list }}"
+    env:
+      port: "{{ datasheet.port }}"
     ports:
-      - "0.0.0.0:{{ datasheet.port }}:4040"
+      - "0.0.0.0:{{ datasheet.port }}:{{ datasheet.port }}"
   when: datasheet.local is defined
 
 - name: run datasheet-server in container (w/o volumes)
   docker_container:
     name: "{{ ds_container }}"
     image: "{{ ds_image }}"
+    env:
+      port: "{{ datasheet.port }}"
     ports:
-      - "0.0.0.0:{{ datasheet.port }}:4040"
+      - "0.0.0.0:{{ datasheet.port }}:{{ datasheet.port }}"
   when: datasheet.local is not defined
