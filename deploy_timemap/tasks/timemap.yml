@@ -34,6 +34,12 @@
   set_fact: publish_dir={{ static_files_folder|default('/var/www/html') }}
   when: "{{ lookup('env', 'TIMEMAP_PUBLISH_AT_ROOT') }}"
 
+- name: create root folder if it does not already exist
+  file:
+    path: "{{ static_files_folder }}"
+    state: directory
+  become: yes
+
 - name: server - remove previous frontend if exists
   file:
     state: absent
