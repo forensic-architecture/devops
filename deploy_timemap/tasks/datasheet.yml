@@ -85,7 +85,7 @@
     image: "{{ ds_image }}"
     volumes: "{{ local_volumes | list }}"
     env:
-      port: "{{ datasheet.port }}"
+      PORT: "{{ datasheet.port }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:{{ datasheet.port }}"
   when: datasheet.local is defined
@@ -95,7 +95,7 @@
     name: "{{ ds_container }}"
     image: "{{ ds_image }}"
     env:
-      port: "{{ datasheet.port }}"
+      PORT: "{{ datasheet.port }}"
     ports:
       - "0.0.0.0:{{ datasheet.port }}:{{ datasheet.port }}"
   when: datasheet.local is not defined
