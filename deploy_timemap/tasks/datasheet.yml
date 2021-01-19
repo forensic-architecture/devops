@@ -48,10 +48,14 @@
     src: credentials/datasheet_config.js
     dest: datasheet-server/src/config.js
 
+- name: store container id in register
+  shell: docker container ls --format \{\{.ID\}\}\\t\{\{.Ports\}\} | grep {{ datasheet.port }} | awk '{print $1}'
+  register: command_output
+
 - name: set datasheet Name
   set_fact:
     ds_image: "{{ timemaps | map(attribute='name') | join('_') + '__datasheet' }}"
-    ds_container: "{{ timemaps | map(attribute='name') | join('_') }}"
+    ds_container: "{{ command_output.stdout }}"
 
 - name: remove container if exists
   docker_container:
@@ -80,14 +84,18 @@
     name: "{{ ds_container }}"
     image: "{{ ds_image }}"
     volumes: "{{ local_volumes | list }}"
+    env:
+      PORT: "{{ datasheet.port }}"
     ports:
-      - "0.0.0.0:{{ datasheet.port }}:8080"
+      - "0.0.0.0:{{ datasheet.port }}:{{ datasheet.port }}"
   when: datasheet.local is defined
 
 - name: run datasheet-server in container (w/o volumes)
   docker_container:
     name: "{{ ds_container }}"
     image: "{{ ds_image }}"
+    env:
+      PORT: "{{ datasheet.port }}"
     ports:
-      - "0.0.0.0:{{ datasheet.port }}:8080"
+      - "0.0.0.0:{{ datasheet.port }}:{{ datasheet.port }}"
   when: datasheet.local is not defined

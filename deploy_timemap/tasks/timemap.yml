@@ -16,13 +16,13 @@
   become: no
 
 - name: replace title in index.html
-  local_action: "shell cat timemap/index.html | gawk \"/<title>.*/ { print \\\"<title>{{ timemap.display_name }}</title>\\\"; next; } /.*/ { print $1; }\" > timemap/index2.html && rm timemap/index.html && mv timemap/index2.html timemap/index.html"
+  local_action: "shell pwd && cat timemap/index.html | gawk \"/<title>.*/ { print \\\"<title>{{ timemap.display_name }}</title>\\\"; next; } /.*/ { print $1; }\" > timemap/index2.html && rm timemap/index.html && mv timemap/index2.html timemap/index.html"
   become: no
 
 - name: ansible host - build app
   local_action:
     module: shell
-    _raw_params: yarn build
+    _raw_params: CI=false yarn build
     chdir: timemap
   become: no
 
@@ -33,6 +33,12 @@
 - name: set publish directory
   set_fact: publish_dir={{ static_files_folder|default('/var/www/html') }}
   when: "{{ lookup('env', 'TIMEMAP_PUBLISH_AT_ROOT') }}"
+
+- name: create root folder if it does not already exist
+  file:
+    path: "{{ static_files_folder }}"
+    state: directory
+  become: yes
 
 - name: server - remove previous frontend if exists
   file:

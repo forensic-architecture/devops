@@ -25,13 +25,13 @@
     state: present
     create: yes
 
-- name: add line in nginx config for timemap alias for {{ timemap.name }} with domain name:{{ domain_name }}
-  lineinfile:
-    dest: /etc/nginx/sites-available/default
-    line: "\tlocation /{{ timemap.name }} {root /var/www/html;}"
-    insertafter: 'server_name {{ domain_name }} www.{{ domain_name }};'
-    state: present
-    create: yes
+# - name: add line in nginx config for timemap alias for {{ timemap.name }} with domain name:{{ domain_name }}
+#   lineinfile:
+#     dest: /etc/nginx/sites-available/default
+#     line: "\tlocation /{{ timemap.name }} {root /var/www/html;}"
+#     insertafter: 'server_name {{ domain_name }} www.{{ domain_name }};'
+#     state: present
+#     create: yes
 
 # - name: add a marker for certbot block
 #   lineinfile:
