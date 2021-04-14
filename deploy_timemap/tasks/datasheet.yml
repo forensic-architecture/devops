@@ -72,6 +72,7 @@
 - name: build docker image
   docker_image:
     path: datasheet-server
+    state: present
     name: "{{ ds_image }}"
 
 - name: interpolate volume strings for local
