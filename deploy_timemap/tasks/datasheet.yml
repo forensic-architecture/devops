@@ -67,7 +67,7 @@
   docker_image:
     state: absent
     name: "{{ ds_image }}"
-    force: true
+    force_absent: true
 
 - name: build docker image
   docker_image:
