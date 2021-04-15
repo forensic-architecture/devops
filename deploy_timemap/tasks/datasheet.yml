@@ -74,6 +74,7 @@
     name: "{{ ds_image }}"
     build:
       path: datasheet-server
+    source: build
 
 - name: interpolate volume strings for local
   set_fact:
