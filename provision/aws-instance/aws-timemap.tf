@@ -5,11 +5,10 @@ provider "aws" {
 
 resource "aws_s3_bucket" "timemap-bucket" {
   bucket = var.bucket-name
-  region = var.region
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
-    allowed_origins = [vars.cors_allowed_origins]
+    allowed_origins = [var.cors_allowed_origins]
     max_age_seconds = 3000
   }
 
