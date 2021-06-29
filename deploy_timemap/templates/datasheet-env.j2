@@ -1,3 +1,6 @@
 PORT={{ datasheet.port|default('4040') }}
 SERVICE_ACCOUNT_EMAIL="{{ datasheet.service_account.email|default('')  }}"
 SERVICE_ACCOUNT_PRIVATE_KEY="{{ datasheet.service_account.private_key|default('') }}"
+MEDIA_API_ENDPOINT="{{ datasheet.media_api.endpoint|default('') }}"
+MEDIA_AUTH_USER="{{ datasheet.media_api.user|default('') }}"
+MEDIA_AUTH_PWORD="{{ datasheet.media_api.pword|default('') }}"
