@@ -11,9 +11,9 @@
     - ../vars/main.yml
     - ../vars/vault.yml
   tasks:
-    - name: Install certbot for "{{ domain_name }}"  
+    - name: Install certbot for "{{ domain_name }}"
       import_tasks: ../tasks/certbot.yml
       tags: [prepare]
-    - name: Install a certificate   
+    - name: Install a certificate
       import_tasks: ../tasks/certificate.yml
       tags: [certificate]

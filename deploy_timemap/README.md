@@ -83,7 +83,7 @@ ansible-playbook -K playbooks/check_templates.yml
 ```
 
 ### Deploy timemap
-Deploy to the remove you specified in the '.env' file with the following
+Deploy to the remote you specified in the '.env' file with the following
 command. Enter your **remote** sudo command when prompted:
 ```
 ansible-playbook playbooks/deploy_timemap.yml --ask-become-pass

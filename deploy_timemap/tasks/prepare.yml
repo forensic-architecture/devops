@@ -9,9 +9,9 @@
     name: ['curl', 'nginx', 'git', 'python3-pip', 'software-properties-common']
     state: present
 
-- name: install docker
-  import_role:
-    name: angstwad.docker_ubuntu
-
-- pip:
-    name: docker
+# - name: install docker
+#   import_role:
+#     name: angstwad.docker_ubuntu
+#
+# - pip:
+#     name: docker

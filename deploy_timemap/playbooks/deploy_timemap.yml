@@ -40,13 +40,14 @@
       become: no
       when: timemap_src
 
-    - name: ansible host - yarn install
+    - name: ansible host - npm install
       local_action:
         module: yarn
         path: timemap
         state: latest
       tags: [timemap]
       become: no
+      when: not timemap_src
 
     - include_tasks:
         file: ../tasks/timemap.yml

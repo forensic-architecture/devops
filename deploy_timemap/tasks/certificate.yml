@@ -29,8 +29,8 @@
     path: /etc/nginx/sites-available/default
     marker: "# enter certbot block below"
     insertafter: "# enter certbot block below"
-    block: |    
-      listen 443 ssl; 
+    block: |
+      listen 443 ssl;
       ssl_certificate /etc/letsencrypt/live/{{domain_name}}/fullchain.pem;
       ssl_certificate_key /etc/letsencrypt/live/{{domain_name}}/privkey.pem;
       include /etc/letsencrypt/options-ssl-nginx.conf;
@@ -38,9 +38,9 @@
       # Redirect non-https traffic to https
       if ($scheme != "https") {
         return 301 https://$host$request_uri;
-      } 
+      }
     state: present
     create: yes
 
 
-    
+
